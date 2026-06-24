@@ -1,29 +1,29 @@
 name: Deploy to InfinityFree via FTP
 
 on:
-push:
-branches:
-- main
+  push:
+    branches:
+      - main
 
 jobs:
-deploy:
-runs-on: ubuntu-latest
-steps:
-- name: Checkout Repository
-uses: actions/checkout@v4
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-  - name: Sync files
-    uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-    with:
-      server: ${{ secrets.FTP_SERVER }}
-      username: ${{ secrets.FTP_USERNAME }}
-      password: ${{ secrets.FTP_PASSWORD }}
-      local-dir: ./
-      server-dir: /htdocs/
-      dangerous-clean-slate: false
-      exclude: |
-        **/.git*
-        **/.git*/**
-        **/.github*
-        **/.github*/**
-        README.md
+      - name: Sync files
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ftpupload.net
+          username: if0_42258016
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./
+          server-dir: /htdocs/
+          dangerous-clean-slate: false
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/.github*
+            **/.github*/**
+            README.md
