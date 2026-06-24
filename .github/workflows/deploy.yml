@@ -1,5 +1,4 @@
- # Paso B: Subir de manera controlada y aislada a tu servidor FTP
-   name: Deploy to InfinityFree via FTP
+name: Deploy to InfinityFree via FTP
     uses: SamKirkland/FTP-Deploy-Action@v4.3.5
     with:
       server: ${{ secrets.FTP_SERVER }}
@@ -7,7 +6,6 @@
       password: ${{ secrets.FTP_PASSWORD }}
       local-dir: ./
       server-dir: /htdocs/
-      # SEGURIDAD CRÍTICA: Mantenemos esto en 'false' para que no afecte ni borre tus otros dos proyectos en el hosting
       dangerous-clean-slate: false
       exclude: |
         **/.git*
