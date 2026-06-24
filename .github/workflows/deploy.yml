@@ -1,0 +1,29 @@
+# Paso 2: Desplegar los archivos por FTP de manera totalmente aislada y segura
+  - name: Deploy to InfinityFree via FTP
+    uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+    with:
+      # Servidor FTP obtenido de tus secretos de seguridad
+      server: ${{ secrets.FTP_SERVER }}
+      
+      # Usuario FTP obtenido de tus secretos de seguridad
+      username: ${{ secrets.FTP_USERNAME }}
+      
+      # Contraseña FTP obtenida de tus secretos de seguridad
+      password: ${{ secrets.FTP_PASSWORD }}
+      
+      # Carpeta local que se va a subir (la raíz del repositorio donde está tu index.html)
+      local-dir: ./
+      
+      # Carpeta destino en tu servidor de InfinityFree (la ruta principal para tu sitio web)
+      server-dir: /htdocs/
+      
+      # SEGURIDAD CRÍTICA: 'false' para que el script NO borre ningún otro archivo de tus otros proyectos
+      dangerous-clean-slate: false
+
+      # Archivos que NO se subirán a tu servidor público para mantener la limpieza
+      exclude: |
+        **/.git*
+        **/.git*/**
+        **/.github*
+        **/.github*/**
+        README.md
