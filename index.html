@@ -1,190 +1,637 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { 
-  Gamepad2, 
-  ShieldCheck, 
-  Wifi, 
-  Home, 
-  Headset, 
-  BatteryCharging, 
-  Briefcase, 
-  Tv,
-  X,
-  Search,
-  ChevronRight,
-  Sparkles,
-  Bot,
-  Activity,
-  ChevronLeft,
-  Loader2,
-  RefreshCw,
-  Coins
-} from 'lucide-react';
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Netlife Feel HUB</title>
+    
+    <!-- Google Fonts: Montserrat para tipografía corporativa premium -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,600;0,700;0,900;1,800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
 
-const SERVICES = [
-  { 
-    id: 'gaming', 
-    name: 'Gamer', 
-    icon: Gamepad2, 
-    color: 'text-purple-400', 
-    shadow: 'shadow-purple-500/50', 
-    angle: 270, // Top
-    desc: 'Planes Gamer con rutas optimizadas y menor latencia para jugar al máximo nivel. Que el lag no sea tu enemigo.',
-    links: [{ label: 'Ver plan Gamer Netlife', url: 'https://netlife.ec/plan-gamer-netlife/' }]
-  },
-  { 
-    id: 'ciberseguridad', 
-    name: 'Ciberseguridad', 
-    icon: ShieldCheck, 
-    color: 'text-blue-400', 
-    shadow: 'shadow-blue-500/50', 
-    angle: 315, // Top-Right
-    desc: 'Netlife Defense, Safe Kids y Password Manager. Blindaje total 24/7 para proteger a los que más amas y tu identidad digital.',
-    links: [{ label: 'Ver Seguridad Total Defense', url: 'https://netlife.ec/seguridad-total-defense/' }]
-  },
-  { 
-    id: 'full_coverage', 
-    name: 'Full Cobertura', 
-    icon: Wifi, 
-    color: 'text-cyan-400', 
-    shadow: 'shadow-cyan-500/50', 
-    angle: 0, // Right
-    desc: 'Wifi Gi, Extender y Cableado Ethernet. Cobertura inquebrantable en cada rincón de tu hogar, sin zonas muertas.',
-    links: [
-      { label: 'Ver especificaciones Wifi Gi', url: 'https://netlife.ec/wifi-gi/' },
-      { label: 'Ver Cableado Ethernet', url: 'https://netlife.ec/cableadoethernet/' }
-    ]
-  },
-  { 
-    id: 'domotica', 
-    name: 'Domótica', 
-    icon: Home, 
-    color: 'text-emerald-400', 
-    shadow: 'shadow-emerald-500/50', 
-    angle: 45, // Bottom-Right
-    desc: 'NetlifeCam Indoor y Outdoor. Tu hogar en la palma de tu mano. Control, automatización y vigilancia inteligente.',
-    links: [{ label: 'Ver Netlife Cam', url: 'https://netlife.ec/netlife-cam/' }]
-  },
-  { 
-    id: 'asistencia', 
-    name: 'Asistencia', 
-    icon: Headset, 
-    color: 'text-amber-400', 
-    shadow: 'shadow-amber-500/50', 
-    angle: 90, // Bottom
-    desc: 'Soporte Pro y Premium. No te dejamos solo; nuestros expertos están listos para resolver cualquier desafío técnico.',
-    links: [{ label: 'Ver Asistencia Remota', url: 'https://netlife.ec/asistencia-remota/' }]
-  },
-  { 
-    id: 'equipamiento', 
-    name: 'Equipamiento', 
-    icon: BatteryCharging, 
-    color: 'text-green-400', 
-    shadow: 'shadow-green-500/50', 
-    angle: 135, // Bottom-Left
-    desc: 'Mini UPS inteligente. Porque tu vida no puede detenerse por un apagón. Mantente conectado siempre.',
-    links: [{ label: 'Ver Wifi y Extender Premium', url: 'https://netlife.ec/wifi-y-extender-dual-band-premium/' }]
-  },
-  { 
-    id: 'productividad', 
-    name: 'Productividad', 
-    icon: Briefcase, 
-    color: 'text-indigo-400', 
-    shadow: 'shadow-indigo-500/50', 
-    angle: 180, // Left
-    desc: 'Netlife Cloud, IP Fija y Constructor Web. Herramientas de grado empresarial para potenciar tu negocio o teletrabajo.',
-    links: [
-      { label: 'Ver Netlife Cloud', url: 'https://netlife.ec/netlife-cloud/' },
-      { label: 'Ver Constructor de Sitios Web', url: 'https://netlife.ec/constructor-sitios-web-rapido/' }
-    ]
-  },
-  { 
-    id: 'entretenimiento', 
-    name: 'Entretenimiento', 
-    icon: Tv, 
-    color: 'text-pink-400', 
-    shadow: 'shadow-pink-500/50', 
-    angle: 225, // Top-Left
-    desc: 'Paramount+, Zapping, ECDF. Tus momentos de relax garantizados con el mejor contenido de cine, series y deportes.',
-    links: [{ label: 'Ver canales de Entretenimiento', url: 'https://netlife.ec/entretenimiento/' }]
-  },
-];
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #000000;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
 
-const getTooltipPosition = (angle) => {
-  switch(angle) {
-    case 0: return "left-[125%] top-1/2 -translate-y-1/2"; 
-    case 45: return "left-[110%] top-[105%]"; 
-    case 90: return "top-[125%] left-1/2 -translate-x-1/2"; 
-    case 135: return "right-[110%] top-[105%]"; 
-    case 180: return "right-[125%] top-1/2 -translate-y-1/2"; 
-    case 225: return "right-[110%] bottom-[105%]"; 
-    case 270: return "bottom-[125%] left-1/2 -translate-x-1/2"; 
-    case 315: return "left-[110%] bottom-[105%]"; 
-    default: return "left-full ml-4 top-0";
-  }
-};
+        /* Fondo de red de energía tecnológica de Netlife */
+        .tech-bg {
+            background-image: 
+                radial-gradient(circle at 50% 50%, rgba(249, 115, 22, 0.08) 0%, transparent 60%),
+                linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 100% 100%, 30px 30px, 30px 30px;
+        }
 
-export default function App() {
-  const [isReactorActive, setIsReactorActive] = useState(false);
-  const [selectedService, setSelectedService] = useState(null);
-  const [hoveredServiceId, setHoveredServiceId] = useState(null);
-  const [showConsultModal, setShowConsultModal] = useState(false);
-  const [isLoaded, setIsLoaded] = useState(false);
+        /* Scrollbar del HUD lateral personalizado */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(249, 115, 22, 0.3);
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: rgba(249, 115, 22, 0.6);
+        }
 
-  const [showAiDiagnostic, setShowAiDiagnostic] = useState(false);
-  const [aiStep, setAiStep] = useState(1);
-  const [aiAnswers, setAiAnswers] = useState({
-    householdSize: '1-2',
-    remoteActivity: 'none',
-    hasGamers: 'no',
-    primaryFocus: 'entretenimiento'
-  });
-  const [aiLoading, setAiLoading] = useState(false);
-  const [aiResponse, setAiResponse] = useState(null);
-  const [aiError, setAiError] = useState(null);
+        /* Animaciones personalizadas del reactor y bobinas */
+        @keyframes heartbeat-synced {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 0 25px rgba(249, 115, 22, 0.45), inset 0 0 15px rgba(249, 115, 22, 0.2);
+            }
+            45% {
+                transform: scale(1.018);
+                box-shadow: 0 0 45px rgba(249, 115, 22, 0.95), inset 0 0 25px rgba(249, 115, 22, 0.45);
+            }
+            60% {
+                transform: scale(1.006);
+                box-shadow: 0 0 32px rgba(249, 115, 22, 0.6), inset 0 0 18px rgba(249, 115, 22, 0.3);
+            }
+        }
+        
+        @keyframes central-n-pulse {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale(1);
+                box-shadow: 0 0 30px rgba(249, 115, 22, 0.45);
+            }
+            45% {
+                transform: translate(-50%, -50%) scale(1.05);
+                box-shadow: 0 0 50px rgba(249, 115, 22, 0.85);
+            }
+            60% {
+                transform: translate(-50%, -50%) scale(1.01);
+                box-shadow: 0 0 38px rgba(249, 115, 22, 0.6);
+            }
+        }
 
-  useEffect(() => {
-    const link = document.createElement('link');
-    link.href = 'https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,600;0,700;0,900;1,800&display=swap';
-    link.rel = 'stylesheet';
-    document.head.appendChild(link);
-    setIsLoaded(true);
-  }, []);
+        @keyframes electric-spark {
+            0%, 100% { 
+                filter: drop-shadow(0 0 8px #f97316) drop-shadow(0 0 12px #eab308); 
+                stroke: #facc15; 
+            }
+            15%, 85% { 
+                filter: drop-shadow(0 0 4px #ea580c); 
+                stroke: #ea580c; 
+            }
+            30%, 70% { 
+                filter: drop-shadow(0 0 15px #f97316) drop-shadow(0 0 25px #ffffff); 
+                stroke: #ffffff; 
+            }
+            50% { 
+                filter: drop-shadow(0 0 6px #facc15); 
+                stroke: #fcd34d; 
+            }
+        }
 
-  if (!isLoaded) return null;
+        @keyframes electric-glow-selected {
+            0%, 100% { 
+                box-shadow: 0 0 15px #f97316, inset 0 0 8px #ea580c, 0 0 10px rgba(249, 115, 22, 0.4); 
+                border-color: #facc15; 
+            }
+            50% { 
+                box-shadow: 0 0 28px #eab308, inset 0 0 12px #f97316, 0 0 18px rgba(254, 215, 170, 0.8); 
+                border-color: #ffffff; 
+              }
+        }
 
-  const toggleReactor = (e) => {
-    e.stopPropagation();
-    setIsReactorActive(!isReactorActive);
-    if (isReactorActive) setSelectedService(null);
-  };
+        .animate-heartbeat-bioluminescent {
+            animation: heartbeat-synced 3s cubic-bezier(0.25, 0.8, 0.25, 1) infinite;
+        }
 
-  const handleServiceClick = (service, e) => {
-    e.stopPropagation();
-    setSelectedService(service);
-    setShowAiDiagnostic(false); // Ocultar diagnóstico si se hace clic en un servicio
-  };
+        .animate-central-n {
+            animation: central-n-pulse 3s cubic-bezier(0.25, 0.8, 0.25, 1) infinite;
+        }
 
-  const handleNClick = (e) => {
-    e.stopPropagation();
-    setShowConsultModal(true);
-  };
+        .animate-electric {
+            animation: electric-spark 0.35s infinite;
+        }
 
-  const handleBackgroundClick = () => {
-    setIsReactorActive(false);
-    setSelectedService(null);
-    setHoveredServiceId(null);
-    setShowAiDiagnostic(false);
-  };
+        .animate-electric-glowing {
+            animation: electric-glow-selected 0.4s infinite;
+        }
+    </style>
+</head>
+<body class="tech-bg min-h-screen flex items-center select-none cursor-default">
 
-  const handleGenerateDiagnostic = async () => {
-    setAiLoading(true);
-    setAiError(null);
-    setAiResponse(null);
+    <!-- Portal Principal / Grid Interactiva -->
+    <div class="w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10 p-6 lg:p-12" onclick="handleBackgroundClick()">
+        
+        <!-- Brillo ambiental reactivo -->
+        <div id="ambient-glow" class="absolute inset-0 transition-opacity duration-1000 pointer-events-none opacity-40">
+            <div class="absolute top-1/2 left-1/3 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[850px] bg-gradient-to-r from-orange-600/10 to-yellow-500/5 rounded-full blur-[130px]"></div>
+        </div>
 
-    const apiKey = ""; // Canvas reemplaza automáticamente con la API key activa
-    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+        <!-- COLUMNA IZQUIERDA: Ecosistema Radial y Reactor de Potencia -->
+        <div class="lg:col-span-7 flex flex-col items-center justify-center relative min-h-[520px]">
+            <div class="relative w-[480px] h-[480px] flex items-center justify-center">
+                
+                <!-- ANILLO BIOLUMINISCENTE PERMANENTE CON LATIDO INTEGRADO -->
+                <div 
+                  id="permanent-ring"
+                  class="absolute w-[390px] h-[390px] rounded-full border border-orange-500/30 pointer-events-none animate-heartbeat-bioluminescent"
+                  style="background: rgba(249, 115, 22, 0.012);"
+                ></div>
 
-    const systemPrompt = `Actúa como Aura, el sofisticado asesor de inteligencia artificial de Netlife Ecuador, inspirado en el arquetipo de Tony Stark (sofisticado, irreverente pero empático, un Sabio e Inocente).
+                <!-- CHALECO Y CAPAS DEL REACTOR CENTRAL -->
+                <div 
+                  id="reactor-shell"
+                  class="absolute w-[350px] h-[350px] rounded-full transition-all duration-700 ease-out z-10 scale-100"
+                >
+                  <div class="absolute inset-0 bg-gradient-to-tr from-orange-600 to-yellow-500 rounded-full opacity-15 blur-xl"></div>
+                  
+                  <!-- Reactor SVG con 8 bobinas sincronizadas -->
+                  <svg viewBox="0 0 200 200" class="w-full h-full transform scale-95 transition-transform duration-500 overflow-visible">
+                    <circle 
+                      cx="100" 
+                      cy="100" 
+                      r="92" 
+                      fill="#040405" 
+                      stroke="#f97316" 
+                      stroke-width="0.5" 
+                      stroke-opacity="0.15"
+                      class="cursor-pointer"
+                      onclick="toggleReactor(event)"
+                    />
+                    
+                    <!-- Contenedor dinámico de bobinas (Stark Coils) -->
+                    <g id="stark-coils"></g>
+
+                    <circle cx="100" cy="100" r="54" fill="none" stroke="#f97316" stroke-width="0.8" stroke-opacity="0.25" />
+                    <circle cx="100" cy="100" r="50" fill="#010102" stroke="#eab308" stroke-width="0.5" stroke-opacity="0.15" />
+                  </svg>
+                </div>
+
+                <!-- BOTÓN N CENTRAL ALINEADO -->
+                <button 
+                  onclick="handleNClick(event)"
+                  class="absolute z-30 w-24 h-24 bg-gradient-to-br from-orange-500 to-yellow-500 rounded-full flex items-center justify-center transition-all duration-500 group animate-central-n"
+                  style="top: 50%; left: 50%; transform: translate(-50%, -50%); box-shadow: 0 0 35px rgba(249, 115, 22, 0.45);"
+                >
+                  <div class="absolute inset-[3px] bg-[#020203] rounded-full flex items-center justify-center overflow-hidden">
+                    <span 
+                      class="text-5xl font-black italic text-white select-none transition-transform duration-300 group-hover:scale-110"
+                      style="font-family: 'Montserrat', sans-serif; text-shadow: 0 0 15px rgba(255,255,255,0.85); transform: skewX(-8deg) translateX(1px);"
+                    >
+                      N
+                    </span>
+                  </div>
+                </button>
+
+                <!-- Contenedor dinámico para los nodos orbitales de servicios -->
+                <div id="orbit-container" class="absolute inset-0 flex items-center justify-center pointer-events-none"></div>
+
+            </div>
+        </div>
+
+        <!-- COLUMNA DERECHA: Consola de Control Lateral HUD / Asistente AI -->
+        <div class="lg:col-span-5 flex flex-col justify-center min-h-[400px]">
+            <div 
+              class="bg-gradient-to-b from-zinc-900/50 to-zinc-950/95 backdrop-blur-xl border border-zinc-800/60 p-8 rounded-3xl shadow-[0_25px_60px_rgba(0,0,0,0.6)] transition-all duration-500 flex flex-col justify-center relative overflow-hidden group min-h-[380px]"
+              onclick="event.stopPropagation()"
+            >
+                <div class="absolute top-0 right-0 w-16 h-16 border-t-2 border-r-2 border-orange-500/15 rounded-tr-3xl pointer-events-none transition-colors group-hover:border-orange-500/30"></div>
+                
+                <!-- Consola dinámica HUD de visualización -->
+                <div id="hud-console" class="h-full flex flex-col justify-between"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Leyenda Instructiva HUD -->
+    <div class="absolute bottom-6 left-0 w-full text-center px-4 pointer-events-none z-20">
+        <p class="text-zinc-300 text-xs tracking-wider font-semibold max-w-3xl mx-auto leading-relaxed drop-shadow-md">
+            Haz clic en las bobinas de energía para expandir tu ecosistema digital o en la <span class="text-orange-500 font-extrabold">N</span> central para auditar tu plan activo.
+        </p>
+    </div>
+
+    <!-- VENTANA MODAL DE AUDITORÍA (CONSULTA DE CÉDULA) -->
+    <div 
+      id="consult-modal" 
+      class="absolute inset-0 z-[100] flex items-center justify-center p-6 bg-black/85 backdrop-blur-md hidden"
+      onclick="closeConsultModal()"
+    >
+        <div 
+          class="w-full max-w-md bg-zinc-900 border border-orange-500/20 rounded-3xl p-8 shadow-[0_0_60px_rgba(249,115,22,0.2)] relative transform transition-all scale-100"
+          onclick="event.stopPropagation()"
+        >
+            <button onclick="closeConsultModal()" class="absolute top-5 right-5 text-zinc-500 hover:text-white bg-zinc-800 hover:bg-zinc-700 transition-colors rounded-full p-1.5">
+              <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
+            </button>
+            <div class="flex justify-center mb-6 mt-4">
+              <div class="relative w-16 h-16">
+                <div class="absolute inset-0 border-4 border-orange-500 border-t-transparent rounded-full animate-spin"></div>
+                <div class="absolute inset-0 flex items-center justify-center text-orange-400">
+                  <svg class="w-6 h-6 animate-pulse" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /></svg>
+                </div>
+              </div>
+            </div>
+            <h2 class="text-2xl font-black text-center mb-2 tracking-wide">Consulta tu <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-yellow-400">Estatus</span></h2>
+            <p class="text-center text-zinc-400 text-sm leading-relaxed mb-6 font-light">Ingresa tu número de cédula o código de cliente para escanear en tiempo real las soluciones digitales activas en tu cuenta.</p>
+            <div class="space-y-4">
+              <input type="text" placeholder="Ej. 17xxxxxxxx" class="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3.5 text-white placeholder-zinc-600 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-all font-medium text-sm" />
+              <button class="w-full py-4 bg-gradient-to-r from-orange-600 to-yellow-500 text-black font-black tracking-wider text-xs uppercase rounded-xl hover:shadow-[0_0_25px_rgba(249,115,22,0.35)] hover:brightness-110 transition-all active:scale-[0.99]" onclick="closeConsultModal()">Escanear mis servicios</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- LÓGICA DE CONTROL HUD Y ESTADOS INTERACTIVOS -->
+    <script>
+        // Declaración del pool de iconos SVG para Lucide nativo de alto rendimiento
+        const SVG_GAMEPAD = `<svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" x2="10" y1="12" y2="12" /><line x1="8" x2="8" y1="10" y2="14" /><line x1="15" x2="15.01" y1="13" y2="13" /><line x1="18" x2="18.01" y1="11" y2="11" /><rect width="20" height="12" x="2" y="6" rx="3" /></svg>`;
+        const SVG_SHIELD  = `<svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 9.7a1 1 0 0 1-.68 0C7.5 20.5 4 18 4 13V6a1 1 0 0 1 .76-.97l8-2a1 1 0 0 1 .48 0l8 2a1 1 0 0 1 .76.97Z" /><path d="m9 12 2 2 4-4" /></svg>`;
+        const SVG_WIFI    = `<svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h.01" /><path d="M8.5 16.5c3-3 4-3 7 0" /><path d="M5 13a11.5 11.5 0 0 1 14 0" /><path d="M1.5 9.5a19.6 19.6 0 0 1 21 0" /></svg>`;
+        const SVG_HOME    = `<svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /><polyline points="9 22 9 12 15 12 15 22" /></svg>`;
+        const SVG_HEADSET = `<svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H3a1 1 0 0 1-1-1v-5a9 9 0 0 1 18 0v5a1 1 0 0 1-1 1h-3a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3" /><path d="M21 16v2a2 2 0 0 1-2 2h-2" /></svg>`;
+        const SVG_BATTERY = `<svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 18H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h3.19M15 6h2a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-3.19" /><line x1="23" x2="23" y1="11" y2="13" /><polygon points="11 6 7 12 10 12 9 18 13 12 10 12 11 6" /></svg>`;
+        const SVG_CASE    = `<svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" /><rect width="20" height="14" x="2" y="6" rx="2" /></svg>`;
+        const SVG_TV      = `<svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="15" x="2" y="7" rx="2" ry="2" /><polyline points="17 2 12 7 7 2" /></svg>`;
+
+        const SERVICES = [
+          { 
+            id: 'gaming', 
+            name: 'Gamer', 
+            icon: SVG_GAMEPAD, 
+            color: 'text-purple-400', 
+            angle: 270, // Top
+            desc: 'Planes Gamer con rutas optimizadas y menor latencia para jugar al máximo nivel. Que el lag no sea tu enemigo.',
+            links: [{ label: 'Ver plan Gamer Netlife', url: 'https://netlife.ec/plan-gamer-netlife/' }]
+          },
+          { 
+            id: 'ciberseguridad', 
+            name: 'Ciberseguridad', 
+            icon: SVG_SHIELD, 
+            color: 'text-blue-400', 
+            angle: 315, // Top-Right
+            desc: 'Netlife Defense, Safe Kids y Password Manager. Blindaje total 24/7 para proteger a los que más amas y tu identidad digital.',
+            links: [{ label: 'Ver Seguridad Total Defense', url: 'https://netlife.ec/seguridad-total-defense/' }]
+          },
+          { 
+            id: 'full_coverage', 
+            name: 'Full Cobertura', 
+            icon: SVG_WIFI, 
+            color: 'text-cyan-400', 
+            angle: 0, // Right
+            desc: 'Wifi Gi, Extender y Cableado Ethernet. Cobertura inquebrantable en cada rincón de tu hogar, sin zonas muertas.',
+            links: [
+              { label: 'Ver especificaciones Wifi Gi', url: 'https://netlife.ec/wifi-gi/' },
+              { label: 'Ver Cableado Ethernet', url: 'https://netlife.ec/cableadoethernet/' }
+            ]
+          },
+          { 
+            id: 'domotica', 
+            name: 'Domótica', 
+            icon: SVG_HOME, 
+            color: 'text-emerald-400', 
+            angle: 45, // Bottom-Right
+            desc: 'NetlifeCam Indoor y Outdoor. Tu hogar en la palma de tu mano. Control, automatización y vigilancia inteligente.',
+            links: [{ label: 'Ver Netlife Cam', url: 'https://netlife.ec/netlife-cam/' }]
+          },
+          { 
+            id: 'asistencia', 
+            name: 'Asistencia', 
+            icon: SVG_HEADSET, 
+            color: 'text-amber-400', 
+            angle: 90, // Bottom
+            desc: 'Soporte Pro y Premium. No te dejamos solo; nuestros expertos están listos para resolver cualquier desafío técnico.',
+            links: [{ label: 'Ver Asistencia Remota', url: 'https://netlife.ec/asistencia-remota/' }]
+          },
+          { 
+            id: 'equipamiento', 
+            name: 'Equipamiento', 
+            icon: SVG_BATTERY, 
+            color: 'text-green-400', 
+            angle: 135, // Bottom-Left
+            desc: 'Mini UPS inteligente. Porque tu vida no puede detenerse por un apagón. Mantente conectado siempre.',
+            links: [{ label: 'Ver Wifi y Extender Premium', url: 'https://netlife.ec/wifi-y-extender-dual-band-premium/' }]
+          },
+          { 
+            id: 'productividad', 
+            name: 'Productividad', 
+            icon: SVG_CASE, 
+            color: 'text-indigo-400', 
+            angle: 180, // Left
+            desc: 'Netlife Cloud, IP Fija y Constructor Web. Herramientas de grado empresarial para potenciar tu negocio o teletrabajo.',
+            links: [
+              { label: 'Ver Netlife Cloud', url: 'https://netlife.ec/netlife-cloud/' },
+              { label: 'Ver Constructor de Sitios Web', url: 'https://netlife.ec/constructor-sitios-web-rapido/' }
+            ]
+          },
+          { 
+            id: 'entretenimiento', 
+            name: 'Entretenimiento', 
+            icon: SVG_TV, 
+            color: 'text-pink-400', 
+            angle: 225, // Top-Left
+            desc: 'Paramount+, Zapping, ECDF. Tus momentos de relax garantizados con el mejor contenido de cine, series y deportes.',
+            links: [{ label: 'Ver canales de Entretenimiento', url: 'https://netlife.ec/entretenimiento/' }]
+          },
+        ];
+
+        // Estado Global de la Aplicación
+        let isReactorActive = false;
+        let selectedService = null;
+        let hoveredServiceId = null;
+        let showConsultModal = false;
+        let showAiDiagnostic = false;
+        let aiStep = 1;
+        let aiAnswers = {
+          householdSize: '1-2',
+          remoteActivity: 'none',
+          hasGamers: 'no',
+          primaryFocus: 'entretenimiento'
+        };
+        let aiLoading = false;
+        let aiResponse = null;
+        let aiError = null;
+
+        const radius = 175; // Reducción del radio orbital del 12% para máxima legibilidad vertical
+
+        // Inicializador de la Consola
+        window.onload = function() {
+            buildSTARKCoils();
+            buildOrbitNodes();
+            render();
+        };
+
+        // Construye las bobinas de energía eléctrica del SVG Stark
+        function buildSTARKCoils() {
+            const coilsGroup = document.getElementById('stark-coils');
+            coilsGroup.innerHTML = SERVICES.map(service => {
+                const angle = service.angle + 90;
+                return `
+                  <g 
+                    id="coil-${service.id}"
+                    transform="rotate(${angle} 100 100)"
+                    class="cursor-pointer"
+                    onclick="selectServiceById('${service.id}', event)"
+                    onmouseenter="hoverServiceId('${service.id}')"
+                    onmouseleave="hoverServiceId(null)"
+                  >
+                    <path 
+                      class="coil-inner transition-all duration-300"
+                      d="M93 22 L107 22 L111 42 L89 42 Z" 
+                      fill="transparent" 
+                      stroke="#eab308" 
+                      stroke-width="0.6" 
+                      stroke-opacity="0.4"
+                    />
+                    <path 
+                      class="coil-wires transition-all duration-300"
+                      d="M95 25 L105 25 M94 29 L106 29 M93 33 L107 33" 
+                      fill="none" 
+                      stroke="#ca8a04" 
+                      stroke-width="0.4" 
+                      stroke-opacity="0.3"
+                    />
+                    <path 
+                      class="coil-outer transition-all duration-300"
+                      d="M91 18 L109 18 L114 45 L86 45 Z" 
+                      fill="transparent" 
+                      stroke="#f97316" 
+                      stroke-width="0.8" 
+                      stroke-opacity="0.6"
+                    />
+                  </g>
+                `;
+            }).join('');
+        }
+
+        // Calcula el posicionamiento de los tooltips espaciales
+        function getTooltipClass(angle) {
+          switch(angle) {
+            case 0: return "left-[125%] top-1/2 -translate-y-1/2 ml-2"; 
+            case 45: return "left-[110%] top-[105%] mt-2"; 
+            case 90: return "top-[125%] left-1/2 -translate-x-1/2 mt-2"; 
+            case 135: return "right-[110%] top-[105%] mt-2"; 
+            case 180: return "right-[125%] top-1/2 -translate-y-1/2 mr-2"; 
+            case 225: return "right-[110%] bottom-[105%] mb-2"; 
+            case 270: return "bottom-[125%] left-1/2 -translate-x-1/2 mb-2"; 
+            case 315: return "left-[110%] bottom-[105%] mb-2"; 
+            default: return "left-full ml-4 top-0";
+          }
+        }
+
+        // Construcción interactiva de los nodos orbitales de servicios
+        function buildOrbitNodes() {
+            const container = document.getElementById('orbit-container');
+            container.innerHTML = SERVICES.map((service, index) => {
+                const tooltipPos = getTooltipClass(service.angle);
+                return `
+                  <div 
+                    id="node-${service.id}"
+                    class="absolute z-20 transition-all duration-700 ease-[cubic-bezier(0.19,1,0.22,1)] opacity-0 scale-40 pointer-events-none"
+                    style="left: calc(50% - 32px); top: calc(50% - 32px); transition-delay: ${index * 35}ms;"
+                  >
+                    <button
+                      onclick="selectServiceById('${service.id}', event)"
+                      onmouseenter="hoverServiceId('${service.id}')"
+                      onmouseleave="hoverServiceId(null)"
+                      class="orbit-btn w-16 h-16 rounded-full bg-zinc-950/95 backdrop-blur-md border border-zinc-800/80 hover:border-zinc-400 hover:bg-zinc-900 flex flex-col items-center justify-center transition-all duration-300 group relative"
+                    >
+                      <div class="icon-frame ${service.color} transition-transform duration-300 drop-shadow-[0_0_10px_currentColor]">
+                        ${service.icon}
+                      </div>
+                      
+                      <div class="label absolute -bottom-6 text-[10px] font-bold tracking-wider text-zinc-400 group-hover:text-white transition-colors duration-300 whitespace-nowrap">
+                        ${service.name}
+                      </div>
+                    </button>
+
+                    <!-- Spatial Tooltip de descripción flotando fuera del domo -->
+                    <div 
+                      id="tooltip-${service.id}"
+                      class="tooltip absolute w-56 p-4 bg-zinc-900/95 backdrop-blur-xl border border-zinc-700 rounded-2xl shadow-[0_15px_30px_rgba(0,0,0,0.8)] z-50 transition-all duration-300 opacity-0 scale-75 pointer-events-none ${tooltipPos}"
+                    >
+                      <p class="text-xs text-zinc-300 leading-relaxed font-light">${service.desc}</p>
+                    </div>
+                  </div>
+                `;
+            }).join('');
+        }
+
+        // Manejador del Eje del Reactor Principal
+        function toggleReactor(e) {
+            if (e) e.stopPropagation();
+            isReactorActive = !isReactorActive;
+            if (!isReactorActive) selectedService = null;
+            render();
+        }
+
+        // Selecciona un servicio por ID
+        function selectServiceById(id, e) {
+            if (e) e.stopPropagation();
+            isReactorActive = true;
+            selectedService = SERVICES.find(s => s.id === id);
+            showAiDiagnostic = false;
+            render();
+        }
+
+        // Hover en un servicio
+        function hoverServiceId(id) {
+            hoveredServiceId = id;
+            updateCoilsHighlight();
+            updateOrbitHighlight();
+        }
+
+        // Resalta el SVG correspondiente a las bobinas del reactor central
+        function updateCoilsHighlight() {
+            SERVICES.forEach(service => {
+                const coil = document.getElementById(`coil-${service.id}`);
+                const inner = coil.querySelector('.coil-inner');
+                const wires = coil.querySelector('.coil-wires');
+                const outer = coil.querySelector('.coil-outer');
+
+                const isSelected = selectedService && selectedService.id === service.id;
+                const isHovered = hoveredServiceId === service.id;
+                const isActive = isSelected || isHovered;
+
+                if (isReactorActive) {
+                    if (isActive) {
+                        inner.setAttribute('fill', 'rgba(250, 204, 21, 0.8)');
+                        inner.setAttribute('stroke-opacity', '1.0');
+                        wires.setAttribute('stroke-opacity', '0.9');
+                        outer.setAttribute('fill', 'rgba(249,115,22,0.15)');
+                        outer.setAttribute('stroke', '#facc15');
+                        outer.setAttribute('stroke-width', '1.2');
+                        outer.setAttribute('stroke-opacity', '1');
+                        outer.classList.add('animate-electric');
+                    } else {
+                        inner.setAttribute('fill', 'transparent');
+                        inner.setAttribute('stroke-opacity', '0.15');
+                        wires.setAttribute('stroke-opacity', '0.1');
+                        outer.setAttribute('fill', 'transparent');
+                        outer.setAttribute('stroke', '#f97316');
+                        outer.setAttribute('stroke-width', '0.8');
+                        outer.setAttribute('stroke-opacity', '0.15');
+                        outer.classList.remove('animate-electric');
+                    }
+                } else {
+                    inner.setAttribute('fill', 'transparent');
+                    inner.setAttribute('stroke-opacity', '0.4');
+                    wires.setAttribute('stroke-opacity', '0.3');
+                    outer.setAttribute('fill', 'transparent');
+                    outer.setAttribute('stroke', '#f97316');
+                    outer.setAttribute('stroke-width', '0.8');
+                    outer.setAttribute('stroke-opacity', '0.6');
+                    outer.classList.remove('animate-electric');
+                }
+            });
+        }
+
+        // Resalta visualmente el nodo orbital en sincronía
+        function updateOrbitHighlight() {
+            SERVICES.forEach(service => {
+                const node = document.getElementById(`node-${service.id}`);
+                if (!node) return;
+                const btn = node.querySelector('.orbit-btn');
+                const iconFrame = node.querySelector('.icon-frame');
+                const label = node.querySelector('.label');
+                const tooltip = document.getElementById(`tooltip-${service.id}`);
+
+                const isSelected = selectedService && selectedService.id === service.id;
+                const isHovered = hoveredServiceId === service.id;
+
+                if (isSelected || isHovered) {
+                    btn.classList.add('border-orange-500', 'ring-4', 'ring-orange-500/20', 'scale-110');
+                    btn.classList.remove('border-zinc-800/80');
+                    iconFrame.classList.add('scale-105');
+                    label.classList.add('text-white');
+                    label.classList.remove('text-zinc-400');
+                } else {
+                    btn.classList.remove('border-orange-500', 'ring-4', 'ring-orange-500/20', 'scale-110');
+                    btn.classList.add('border-zinc-800/80');
+                    iconFrame.classList.remove('scale-105');
+                    label.classList.remove('text-white');
+                    label.classList.add('text-zinc-400');
+                }
+
+                if (isSelected) {
+                    btn.classList.add('animate-electric-glowing');
+                    tooltip.classList.remove('opacity-0', 'scale-75', 'pointer-events-none');
+                    tooltip.classList.add('opacity-100', 'scale-100');
+                } else {
+                    btn.classList.remove('animate-electric-glowing');
+                    tooltip.classList.add('opacity-0', 'scale-75', 'pointer-events-none');
+                    tooltip.classList.remove('opacity-100', 'scale-100');
+                }
+            });
+        }
+
+        // Eventos generales del HUD y clicks de fondo
+        function handleNClick(e) {
+            if (e) e.stopPropagation();
+            showConsultModal = true;
+            render();
+        }
+
+        function closeConsultModal() {
+            showConsultModal = false;
+            render();
+        }
+
+        function handleBackgroundClick() {
+            isReactorActive = false;
+            selectedService = null;
+            hoveredServiceId = null;
+            showAiDiagnostic = false;
+            render();
+        }
+
+        // Controladores del Asistente Aura AI (Gemini Integration)
+        function openAiDiagnostic() {
+            isReactorActive = true;
+            showAiDiagnostic = true;
+            selectedService = null;
+            aiStep = 1;
+            aiResponse = null;
+            aiError = null;
+            render();
+        }
+
+        function closeAiDiagnostic() {
+            showAiDiagnostic = false;
+            render();
+        }
+
+        function resetAiDiagnostic() {
+            aiStep = 1;
+            aiResponse = null;
+            aiError = null;
+            render();
+        }
+
+        function setAiAnswer(key, val) {
+            aiAnswers[key] = val;
+            renderHUD();
+        }
+
+        // Llamado con Backoff exponencial a Gemini 2.5 Flash
+        async function generateAiDiagnostic() {
+            aiLoading = true;
+            aiError = null;
+            aiResponse = null;
+            render();
+
+            const apiKey = ""; // La plataforma del Canvas asocia automáticamente el token a la consulta
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+
+            const systemPrompt = `Actúa como Aura, el sofisticado asesor de inteligencia artificial de Netlife Ecuador, inspirado en el arquetipo de Tony Stark (sofisticado, irreverente pero empático, un Sabio e Inocente).
 Tu tarea es auditar y diseñar un Ecosistema Digital de Vida Inteligente personalizado basándote en la huella de hogar del usuario.
 Debes basar tu propuesta estrictamente en el portafolio real de Netlife:
 - Entretenimiento: Netlife Play, Paramount+, Zapping, El Canal del Fútbol.
@@ -207,7 +654,7 @@ Estructura tu respuesta exactamente así, usando un formato HTML o Markdown ultr
 ### 💰 RETORNO DE INVERSIÓN (ROI) DE PAZ MENTAL
 [Un cierre asertivo demostrando que contratar todo esto por separado con otros proveedores les costaría el doble de dinero y diez veces más estrés]`;
 
-    const userPrompt = `Genera mi ecosistema de Netlife ideal para esta configuración de hogar ecuatoriano:
+            const userPrompt = `Genera mi ecosistema de Netlife ideal para esta configuración de hogar ecuatoriano:
 - Tamaño de la familia: ${aiAnswers.householdSize} personas en casa.
 - Nivel de Teletrabajo o Estudio en línea: ${aiAnswers.remoteActivity === 'none' ? 'Ninguno' : aiAnswers.remoteActivity === 'moderate' ? 'Moderado (1 persona)' : 'Intenso (Múltiples personas)'}.
 - Amantes de los Videojuegos en casa (Gamers): ${aiAnswers.hasGamers === 'yes' ? 'Sí, juegan en línea de forma competitiva' : 'No'}.
@@ -215,589 +662,360 @@ Estructura tu respuesta exactamente así, usando un formato HTML o Markdown ultr
 
 Escribe de manera cercana, motivadora y que demuestre el valor agregado de Netlife frente a la competencia de bajo precio.`;
 
-    const payload = {
-      contents: [{ parts: [{ text: userPrompt }] }],
-      systemInstruction: {
-        parts: [{ text: systemPrompt }]
-      }
-    };
+            const payload = {
+              contents: [{ parts: [{ text: userPrompt }] }],
+              systemInstruction: {
+                parts: [{ text: systemPrompt }]
+              }
+            };
 
-    const fetchWithBackoff = async (url, options, retries = 3, delay = 1000) => {
-      try {
-        const res = await fetch(url, options);
-        if (!res.ok) throw new Error(`HTTP Error ${res.status}`);
-        return res;
-      } catch (err) {
-        if (retries > 0) {
-          await new Promise(resolve => setTimeout(resolve, delay));
-          return fetchWithBackoff(url, options, retries - 1, delay * 2);
-        }
-        throw err;
-      }
-    };
+            const fetchWithBackoff = async (url, options, retries = 3, delay = 1000) => {
+              try {
+                const res = await fetch(url, options);
+                if (!res.ok) throw new Error(`HTTP Error ${res.status}`);
+                return res;
+              } catch (err) {
+                if (retries > 0) {
+                  await new Promise(resolve => setTimeout(resolve, delay));
+                  return fetchWithBackoff(url, options, retries - 1, delay * 2);
+                }
+                throw err;
+              }
+            };
 
-    try {
-      const response = await fetchWithBackoff(apiUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
-      const result = await response.json();
-      const text = result.candidates?.[0]?.content?.parts?.[0]?.text;
-      if (text) {
-        setAiResponse(text);
-      } else {
-        throw new Error('Formato de respuesta inesperado.');
-      }
-    } catch (err) {
-      console.error(err);
-      setAiError('Sistemas de análisis en mantenimiento temporal por sobrecarga del reactor. Por favor, reintente.');
-    } finally {
-      setAiLoading(false);
-    }
-  };
-
-  const formatMarkdown = (text) => {
-    if (!text) return '';
-    return text
-      .split('\n')
-      .map((line, index) => {
-        let formatted = line;
-        // Reemplazo simple de Headers
-        if (formatted.startsWith('# ')) {
-          return <h3 key={index} className="text-xl font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-yellow-400 mt-4 mb-2 tracking-wide uppercase">{formatted.replace('# ', '')}</h3>;
-        }
-        if (formatted.startsWith('### ')) {
-          return <h4 key={index} className="text-sm font-bold text-orange-400 mt-4 mb-2 uppercase tracking-widest">{formatted.replace('### ', '')}</h4>;
-        }
-        // Negritas
-        if (formatted.includes('**')) {
-          const parts = formatted.split('**');
-          return (
-            <p key={index} className="text-sm text-zinc-300 leading-relaxed my-2 font-light">
-              {parts.map((part, i) => i % 2 === 1 ? <strong key={i} className="font-extrabold text-white text-shadow-sm">{part}</strong> : part)}
-            </p>
-          );
-        }
-        // Párrafos normales
-        if (formatted.trim() === '') return <div key={index} className="h-2" />;
-        return <p key={index} className="text-sm text-zinc-300 leading-relaxed my-2 font-light">{formatted}</p>;
-      });
-  };
-
-  return (
-    <div 
-      className="min-h-screen w-full bg-black text-slate-100 font-sans flex items-center relative overflow-hidden p-6 lg:p-12 select-none cursor-default"
-      style={{ fontFamily: "'Montserrat', sans-serif" }}
-      onClick={handleBackgroundClick}
-    >
-      {/* Estilos CSS de latidos y efectos bioluminiscentes de la marca */}
-      <style>{`
-        @keyframes heartbeat-synced {
-          0%, 100% {
-            transform: scale(1);
-            box-shadow: 0 0 25px rgba(249, 115, 22, 0.45), inset 0 0 15px rgba(249, 115, 22, 0.2);
-          }
-          45% {
-            transform: scale(1.018);
-            box-shadow: 0 0 45px rgba(249, 115, 22, 0.95), inset 0 0 25px rgba(249, 115, 22, 0.45);
-          }
-          60% {
-            transform: scale(1.006);
-            box-shadow: 0 0 32px rgba(249, 115, 22, 0.6), inset 0 0 18px rgba(249, 115, 22, 0.3);
-          }
-        }
-        
-        @keyframes central-n-pulse {
-          0%, 100% {
-            transform: translate(-50%, -50%) scale(1);
-            box-shadow: 0 0 30px rgba(249, 115, 22, 0.45);
-          }
-          45% {
-            transform: translate(-50%, -50%) scale(1.05);
-            box-shadow: 0 0 50px rgba(249, 115, 22, 0.85);
-          }
-          60% {
-            transform: translate(-50%, -50%) scale(1.01);
-            box-shadow: 0 0 38px rgba(249, 115, 22, 0.6);
-          }
+            try {
+              const response = await fetchWithBackoff(apiUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+              });
+              const result = await response.json();
+              const text = result.candidates?.[0]?.content?.parts?.[0]?.text;
+              if (text) {
+                aiResponse = text;
+              } else {
+                throw new Error('Formato de respuesta inesperado.');
+              }
+            } catch (err) {
+              console.error(err);
+              aiError = 'Sistemas de análisis en mantenimiento temporal por sobrecarga del reactor. Por favor, reintente.';
+            } finally {
+              aiLoading = false;
+              render();
+            }
         }
 
-        /* Efecto de Arco Eléctrico / Plasma para la bobina activa */
-        @keyframes electric-spark {
-          0%, 100% { 
-            filter: drop-shadow(0 0 8px #f97316) drop-shadow(0 0 12px #eab308); 
-            stroke: #facc15; 
-          }
-          15%, 85% { 
-            filter: drop-shadow(0 0 4px #ea580c); 
-            stroke: #ea580c; 
-          }
-          30%, 70% { 
-            filter: drop-shadow(0 0 15px #f97316) drop-shadow(0 0 25px #ffffff); 
-            stroke: #ffffff; 
-          }
-          50% { 
-            filter: drop-shadow(0 0 6px #facc15); 
-            stroke: #fcd34d; 
-          }
+        // Formateador nativo para renderizar la respuesta Markdown de Gemini en HTML limpio
+        function formatMarkdownHTML(text) {
+            if (!text) return '';
+            return text
+              .split('\n')
+              .map(line => {
+                let formatted = line;
+                if (formatted.startsWith('# ')) {
+                  return `<h3 class="text-xl font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-yellow-400 mt-4 mb-2 tracking-wide uppercase">${formatted.replace('# ', '')}</h3>`;
+                }
+                if (formatted.startsWith('### ')) {
+                  return `<h4 class="text-sm font-bold text-orange-400 mt-4 mb-2 uppercase tracking-widest">${formatted.replace('### ', '')}</h4>`;
+                }
+                if (formatted.includes('**')) {
+                  const parts = formatted.split('**');
+                  const renderedParts = parts.map((part, i) => i % 2 === 1 ? `<strong class="font-extrabold text-white text-shadow-sm">${part}</strong>` : part);
+                  return `<p class="text-sm text-zinc-300 leading-relaxed my-2 font-light">${renderedParts.join('')}</p>`;
+                }
+                if (formatted.trim() === '') return `<div class="h-2"></div>`;
+                return `<p class="text-sm text-zinc-300 leading-relaxed my-2 font-light">${formatted}</p>`;
+              }).join('');
         }
 
-        /* Efecto de Electricidad Bioluminiscente alrededor de los botones seleccionados */
-        @keyframes electric-glow-selected {
-          0%, 100% { 
-            box-shadow: 0 0 15px #f97316, inset 0 0 8px #ea580c, 0 0 10px rgba(249, 115, 22, 0.4); 
-            border-color: #facc15; 
-          }
-          50% { 
-            box-shadow: 0 0 28px #eab308, inset 0 0 12px #f97316, 0 0 18px rgba(254, 215, 170, 0.8); 
-            border-color: #ffffff; 
-          }
+        // RENDERIZADOR MAESTRO DE LOS ESTADOS DEL DOM
+        function render() {
+            const ambientGlow = document.getElementById('ambient-glow');
+            const reactorShell = document.getElementById('reactor-shell');
+            const modal = document.getElementById('consult-modal');
+
+            // Actualización visual del fondo y reactor
+            if (isReactorActive) {
+                ambientGlow.className = "absolute inset-0 transition-opacity duration-1000 pointer-events-none opacity-100";
+                reactorShell.className = "absolute w-[350px] h-[350px] rounded-full transition-all duration-700 ease-out z-10 scale-90 opacity-95";
+            } else {
+                ambientGlow.className = "absolute inset-0 transition-opacity duration-1000 pointer-events-none opacity-40";
+                reactorShell.className = "absolute w-[350px] h-[350px] rounded-full transition-all duration-700 ease-out z-10 scale-100";
+            }
+
+            // Actualización de nodos orbitales y traslación geométrica
+            SERVICES.forEach(service => {
+                const node = document.getElementById(`node-${service.id}`);
+                if (!node) return;
+
+                if (isReactorActive) {
+                    const angleRad = (service.angle * Math.PI) / 180;
+                    const x = Math.round(radius * Math.cos(angleRad));
+                    const y = Math.round(radius * Math.sin(angleRad));
+                    node.style.transform = `translate(${x}px, ${y}px) scale(1)`;
+                    node.className = "absolute z-20 transition-all duration-700 ease-[cubic-bezier(0.19,1,0.22,1)] opacity-100 scale-100 pointer-events-auto";
+                } else {
+                    node.style.transform = `translate(0px, 0px) scale(0.4)`;
+                    node.className = "absolute z-20 transition-all duration-700 ease-[cubic-bezier(0.19,1,0.22,1)] opacity-0 scale-40 pointer-events-none";
+                }
+            });
+
+            // Resaltar elementos activos
+            updateCoilsHighlight();
+            updateOrbitHighlight();
+
+            // Renderizar la consola HUD lateral
+            renderHUD();
+
+            // Modal de consulta
+            if (showConsultModal) {
+                modal.classList.remove('hidden');
+            } else {
+                modal.classList.add('hidden');
+            }
         }
 
-        .animate-heartbeat-bioluminescent {
-          animation: heartbeat-synced 3s cubic-bezier(0.25, 0.8, 0.25, 1) infinite;
-        }
-
-        .animate-central-n {
-          animation: central-n-pulse 3s cubic-bezier(0.25, 0.8, 0.25, 1) infinite;
-        }
-
-        .animate-electric {
-          animation: electric-spark 0.35s infinite;
-        }
-
-        .animate-electric-glowing {
-          animation: electric-glow-selected 0.4s infinite;
-        }
-      `}</style>
-
-      {/* Brillo ambiental reactivo */}
-      <div className={`absolute inset-0 transition-opacity duration-1000 pointer-events-none ${isReactorActive ? 'opacity-100' : 'opacity-40'}`}>
-        <div className="absolute top-1/2 left-1/3 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[850px] bg-gradient-to-r from-orange-600/10 to-yellow-500/5 rounded-full blur-[130px]"></div>
-      </div>
-
-      {/* Grid Principal Adaptativo */}
-      <div className="w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
-        
-        {/* COLUMNA IZQUIERDA: Ecosistema Radial y Reactor de Potencia (Escalado -12%) */}
-        <div className="lg:col-span-7 flex flex-col items-center justify-center relative min-h-[520px]">
-          
-          <div className="relative w-[480px] h-[480px] flex items-center justify-center">
+        // Inyección dinámica de la plantilla HUD de acuerdo al estado
+        function renderHUD() {
+            const hudContainer = document.getElementById('hud-console');
             
-            {/* ANILLO BIOLUMINISCENTE PERMANENTE CON LATIDO INTEGRADO */}
-            <div 
-              className="absolute w-[390px] h-[390px] rounded-full border border-orange-500/30 pointer-events-none animate-heartbeat-bioluminescent"
-              style={{
-                boxShadow: 'inset 0 0 20px rgba(249,115,22,0.35), 0 0 30px rgba(249,115,22,0.45)',
-                background: 'rgba(249,115,22,0.012)'
-              }}
-            ></div>
-
-            {/* CHALECO Y CAPAS DEL REACTOR CENTRAL */}
-            <div 
-              className={`absolute w-[350px] h-[350px] rounded-full transition-all duration-700 ease-out z-10 ${isReactorActive ? 'scale-90 opacity-95' : 'scale-100'}`}
-            >
-              <div className="absolute inset-0 bg-gradient-to-tr from-orange-600 to-yellow-500 rounded-full opacity-15 blur-xl"></div>
-              
-              {/* Reactor SVG optimizado con 8 bobinas exactamente alineadas (angle + 90) */}
-              <svg viewBox="0 0 200 200" className="w-full h-full transform scale-95 transition-transform duration-500 overflow-visible">
-                <circle 
-                  cx="100" 
-                  cy="100" 
-                  r="92" 
-                  fill="#040405" 
-                  stroke="#f97316" 
-                  strokeWidth="0.5" 
-                  strokeOpacity="0.15"
-                  className="cursor-pointer"
-                  onClick={toggleReactor}
-                />
-                
-                {/* 8 Bobinas de potencia sincronizadas con los servicios */}
-                <g id="stark-coils">
-                  {SERVICES.map((service) => {
-                    // Corrección matemática crítica (+90 grados) para que el SVG apunte exactamente a su botón correspondiente
-                    const angle = service.angle + 90;
-                    const isSelected = selectedService?.id === service.id;
-                    const isHovered = hoveredServiceId === service.id;
-                    const isActiveCoil = isSelected || isHovered;
-
-                    return (
-                      <g 
-                        key={service.id} 
-                        transform={`rotate(${angle} 100 100)`}
-                        className="cursor-pointer"
-                        onMouseEnter={() => setHoveredServiceId(service.id)}
-                        onMouseLeave={() => setHoveredServiceId(null)}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setIsReactorActive(true);
-                          setSelectedService(service);
-                          setShowAiDiagnostic(false);
-                        }}
-                      >
-                        <path 
-                          d="M93 22 L107 22 L111 42 L89 42 Z" 
-                          fill={isActiveCoil ? "rgba(250, 204, 21, 0.8)" : "transparent"} 
-                          stroke="#eab308" 
-                          strokeWidth="0.6" 
-                          strokeOpacity={isReactorActive ? (isActiveCoil ? "1.0" : "0.15") : "0.4"}
-                          className="transition-all duration-300"
-                        />
-                        <path 
-                          d="M95 25 L105 25 M94 29 L106 29 M93 33 L107 33" 
-                          fill="none" 
-                          stroke="#ca8a04" 
-                          strokeWidth="0.4" 
-                          strokeOpacity={isReactorActive ? (isActiveCoil ? "0.9" : "0.1") : "0.3"} 
-                          className="transition-all duration-300"
-                        />
+            if (showAiDiagnostic) {
+                if (aiLoading) {
+                    hudContainer.innerHTML = `
+                      <div class="h-full flex flex-col justify-between animate-pulse">
+                        <div class="flex items-center justify-between mb-4 border-b border-zinc-800 pb-3">
+                          <div class="flex items-center space-x-2">
+                            <span class="text-orange-400">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8" /><rect width="16" height="12" x="4" y="8" rx="2" /><path d="M2 14h2" /><path d="M20 14h2" /><path d="M15 13v2" /><path d="M9 13v2" /></svg>
+                            </span>
+                            <span class="text-xs font-black tracking-widest text-orange-400 uppercase">Consultor Stark IA</span>
+                          </div>
+                          <button onclick="closeAiDiagnostic()" class="text-zinc-500 hover:text-white transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
+                          </button>
+                        </div>
+                        <div class="flex flex-col justify-center items-center py-12 text-center">
+                          <div class="relative w-20 h-20 mb-6">
+                            <div class="absolute inset-0 border-4 border-dashed border-orange-500 border-t-transparent rounded-full animate-spin"></div>
+                            <div class="absolute inset-0 flex items-center justify-center text-orange-400">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2" /></svg>
+                            </div>
+                          </div>
+                          <h5 class="text-sm font-extrabold text-white mb-2">PROCESANDO HUELLA DE CONECTIVIDAD</h5>
+                          <p class="text-zinc-500 text-xs font-light max-w-xs">
+                            Aura AI se está conectando a la API de Gemini para analizar tus datos y redactar tu plan de beneficios humanos personalizados...
+                          </p>
+                        </div>
+                      </div>
+                    `;
+                } else if (aiResponse) {
+                    hudContainer.innerHTML = `
+                      <div class="h-full flex flex-col justify-between">
+                        <div class="flex items-center justify-between mb-4 border-b border-zinc-800 pb-3">
+                          <div class="flex items-center space-x-2">
+                            <span class="text-orange-400">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8" /><rect width="16" height="12" x="4" y="8" rx="2" /><path d="M2 14h2" /><path d="M20 14h2" /><path d="M15 13v2" /><path d="M9 13v2" /></svg>
+                            </span>
+                            <span class="text-xs font-black tracking-widest text-orange-400 uppercase">Consultor Stark IA</span>
+                          </div>
+                          <button onclick="closeAiDiagnostic()" class="text-zinc-500 hover:text-white transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
+                          </button>
+                        </div>
+                        <div class="overflow-y-auto max-h-[320px] pr-2 custom-scrollbar border-b border-zinc-800/60 pb-4">
+                          ${formatMarkdownHTML(aiResponse)}
+                        </div>
+                        <button 
+                          onclick="resetAiDiagnostic()"
+                          class="w-full mt-4 py-3 bg-zinc-900 border border-zinc-800 text-zinc-300 font-extrabold text-xs uppercase tracking-wider rounded-xl hover:bg-zinc-800 transition-colors flex items-center justify-center space-x-2"
+                        >
+                          <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" /><path d="M16 3h5v5" /><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" /><path d="M8 21H3v-5" /></svg>
+                          <span>Hacer Nuevo Diagnóstico</span>
+                        </button>
+                      </div>
+                    `;
+                } else if (aiError) {
+                    hudContainer.innerHTML = `
+                      <div class="h-full flex flex-col justify-between">
+                        <div class="flex items-center justify-between mb-4 border-b border-zinc-800 pb-3">
+                          <div class="flex items-center space-x-2">
+                            <span class="text-orange-400">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8" /><rect width="16" height="12" x="4" y="8" rx="2" /><path d="M2 14h2" /><path d="M20 14h2" /><path d="M15 13v2" /><path d="M9 13v2" /></svg>
+                            </span>
+                            <span class="text-xs font-black tracking-widest text-orange-400 uppercase">Consultor Stark IA</span>
+                          </div>
+                          <button onclick="closeAiDiagnostic()" class="text-zinc-500 hover:text-white transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
+                          </button>
+                        </div>
+                        <div class="flex flex-col items-center justify-center text-center py-8">
+                          <div class="w-12 h-12 rounded-full bg-red-950/50 border border-red-500/30 flex items-center justify-center text-red-400 mb-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
+                          </div>
+                          <p class="text-xs text-zinc-300 font-light mb-4">${aiError}</p>
+                          <button 
+                            onclick="generateAiDiagnostic()"
+                            class="py-2.5 px-6 bg-zinc-900 border border-zinc-800 rounded-xl text-xs font-bold text-white hover:bg-zinc-800 transition-all"
+                          >
+                            Reintentar Escaneo
+                          </button>
+                        </div>
+                      </div>
+                    `;
+                } else {
+                    hudContainer.innerHTML = `
+                      <div class="h-full flex flex-col justify-between">
+                        <div class="flex items-center justify-between mb-4 border-b border-zinc-800 pb-3">
+                          <div class="flex items-center space-x-2">
+                            <span class="text-orange-400">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8" /><rect width="16" height="12" x="4" y="8" rx="2" /><path d="M2 14h2" /><path d="M20 14h2" /><path d="M15 13v2" /><path d="M9 13v2" /></svg>
+                            </span>
+                            <span class="text-xs font-black tracking-widest text-orange-400 uppercase">Consultor Stark IA</span>
+                          </div>
+                          <button onclick="closeAiDiagnostic()" class="text-zinc-500 hover:text-white transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
+                          </button>
+                        </div>
                         
-                        {/* Celda perimetral con Efecto Eléctrico en lugar de línea blanca sólida */}
-                        <path 
-                          d="M91 18 L109 18 L114 45 L86 45 Z" 
-                          fill={isActiveCoil ? "rgba(249,115,22,0.15)" : "transparent"} 
-                          stroke={isReactorActive && isActiveCoil ? "#facc15" : "#f97316"} 
-                          strokeWidth={isActiveCoil ? "1.2" : "0.8"} 
-                          className={`transition-all duration-300 ${isReactorActive && isActiveCoil ? 'animate-electric' : ''}`}
-                          style={{
-                            strokeOpacity: isReactorActive ? (isActiveCoil ? "1" : "0.15") : "0.6"
-                          }}
-                        />
-                      </g>
-                    );
-                  })}
-                </g>
+                        <div class="space-y-4">
+                          <p class="text-xs text-zinc-400 font-light leading-relaxed">
+                            El arquetipo Stark analizará tu huella de conectividad para construir un ecosistema digital de alta fidelidad.
+                          </p>
+                          
+                          <!-- Pregunta 1 -->
+                          <div class="space-y-1">
+                            <label class="text-[10px] font-bold tracking-wider text-zinc-500 uppercase">Personas en tu Hogar</label>
+                            <div class="grid grid-cols-3 gap-2">
+                              ${['1-2', '3-4', '5+'].map(opt => `
+                                <button
+                                  onclick="setAiAnswer('householdSize', '${opt}')"
+                                  class="py-2 rounded-xl text-xs font-bold transition-all border ${aiAnswers.householdSize === opt ? 'bg-orange-500/10 border-orange-500 text-orange-400' : 'bg-zinc-950/80 border-zinc-800 text-zinc-400 hover:border-zinc-700'}"
+                                >
+                                  ${opt}
+                                </button>
+                              `).join('')}
+                            </div>
+                          </div>
 
-                <circle cx="100" cy="100" r="54" fill="none" stroke="#f97316" strokeWidth="0.8" strokeOpacity="0.25" />
-                <circle cx="100" cy="100" r="50" fill="#010102" stroke="#eab308" strokeWidth="0.5" strokeOpacity="0.15" />
-              </svg>
-            </div>
+                          <!-- Pregunta 2 -->
+                          <div class="space-y-1">
+                            <label class="text-[10px] font-bold tracking-wider text-zinc-500 uppercase">¿Teletrabajo o Estudio en Línea?</label>
+                            <div class="grid grid-cols-3 gap-2">
+                              ${[
+                                { key: 'none', lbl: 'No' },
+                                { key: 'moderate', lbl: '1 Persona' },
+                                { key: 'heavy', lbl: 'Múltiples' }
+                              ].map(opt => `
+                                <button
+                                  onclick="setAiAnswer('remoteActivity', '${opt.key}')"
+                                  class="py-2 rounded-xl text-xs font-bold transition-all border ${aiAnswers.remoteActivity === opt.key ? 'bg-orange-500/10 border-orange-500 text-orange-400' : 'bg-zinc-950/80 border-zinc-800 text-zinc-400 hover:border-zinc-700'}"
+                                >
+                                  ${opt.lbl}
+                                </button>
+                              `).join('')}
+                            </div>
+                          </div>
 
-            {/* BOTÓN N CENTRAL CORREGIDO Y ALINEADO CON TRANSFORMS LIMPIOS */}
-            <button 
-              onClick={handleNClick}
-              className="absolute z-30 w-24 h-24 bg-gradient-to-br from-orange-500 to-yellow-500 rounded-full flex items-center justify-center transition-all duration-500 group animate-central-n"
-              style={{ top: '50%', left: '50%', transform: 'translate(-50%, -50%)', boxShadow: '0 0 35px rgba(249, 115, 22, 0.45)' }}
-            >
-              <div className="absolute inset-[3px] bg-[#020203] rounded-full flex items-center justify-center overflow-hidden">
-                <span 
-                  className="text-5xl font-black italic text-white select-none transition-transform duration-300 group-hover:scale-110"
-                  style={{ 
-                    fontFamily: "'Montserrat', sans-serif", 
-                    fontWeight: 900,
-                    textShadow: '0 0 15px rgba(255,255,255,0.85)',
-                    transform: 'skewX(-8deg) translateX(1px)'
-                  }}
-                >
-                  N
-                </span>
-              </div>
-            </button>
+                          <!-- Pregunta 3 -->
+                          <div class="space-y-1">
+                            <label class="text-[10px] font-bold tracking-wider text-zinc-500 uppercase">¿Amantes de los videojuegos (Gamers)?</label>
+                            <div class="grid grid-cols-2 gap-2">
+                              ${[
+                                { key: 'yes', lbl: 'Sí (Competitivo)' },
+                                { key: 'no', lbl: 'No / Casual' }
+                              ].map(opt => `
+                                <button
+                                  onclick="setAiAnswer('hasGamers', '${opt.key}')"
+                                  class="py-2 rounded-xl text-xs font-bold transition-all border ${aiAnswers.hasGamers === opt.key ? 'bg-orange-500/10 border-orange-500 text-orange-400' : 'bg-zinc-950/80 border-zinc-800 text-zinc-400 hover:border-zinc-700'}"
+                                >
+                                  ${opt.lbl}
+                                </button>
+                              `).join('')}
+                            </div>
+                          </div>
 
-            {/* ICONOS Y TEXTOS EN ÓRBITA EXPANSIVA (Escalados para evitar desbordes) */}
-            {SERVICES.map((service, index) => {
-              const radius = 175; // Reducido un 12% para evitar cualquier desborde o corte vertical
-              const isActive = isReactorActive;
-              const isSelected = selectedService?.id === service.id;
-              const isHovered = hoveredServiceId === service.id;
-              
-              return (
-                <div
-                  key={service.id}
-                  className={`absolute z-20 transition-all duration-700 ease-[cubic-bezier(0.19,1,0.22,1)] ${isActive ? 'opacity-100 scale-100' : 'opacity-0 scale-40 pointer-events-none'}`}
-                  style={{
-                    transform: isActive 
-                      ? `rotate(${service.angle}deg) translate(${radius}px) rotate(-${service.angle}deg)` 
-                      : `rotate(${service.angle}deg) translate(0px) rotate(-${service.angle}deg)`,
-                    transitionDelay: isActive ? `${index * 35}ms` : '0ms'
-                  }}
-                >
-                  <button
-                    onClick={(e) => handleServiceClick(service, e)}
-                    onMouseEnter={() => setHoveredServiceId(service.id)}
-                    onMouseLeave={() => setHoveredServiceId(null)}
-                    className={`w-16 h-16 rounded-full bg-zinc-950/95 backdrop-blur-md border flex flex-col items-center justify-center transition-all duration-300 group relative ${isSelected || isHovered ? 'border-orange-500 ring-4 ring-orange-500/20 scale-110' : 'border-zinc-800/80 hover:border-zinc-400 hover:bg-zinc-900'} ${isSelected ? 'animate-electric-glowing' : ''}`}
-                  >
-                    <service.icon className={`w-6 h-6 ${service.color} transition-transform duration-300 ${isSelected || isHovered ? 'scale-105' : ''} drop-shadow-[0_0_10px_currentColor]`} />
+                          <!-- Pregunta 4 -->
+                          <div class="space-y-1">
+                            <label class="text-[10px] font-bold tracking-wider text-zinc-500 uppercase">Prioridad Máxima del Hogar</label>
+                            <div class="grid grid-cols-2 gap-2">
+                              ${[
+                                { key: 'seguridad', lbl: 'Blindar / Proteger' },
+                                { key: 'productividad', lbl: 'Trabajar / Crear' },
+                                { key: 'entretenimiento', lbl: 'Stream / Relax' },
+                                { key: 'conectividad', lbl: 'Estabilidad Total' }
+                              ].map(opt => `
+                                <button
+                                  onclick="setAiAnswer('primaryFocus', '${opt.key}')"
+                                  class="py-2 rounded-xl text-xs font-bold transition-all border ${aiAnswers.primaryFocus === opt.key ? 'bg-orange-500/10 border-orange-500 text-orange-400' : 'bg-zinc-950/80 border-zinc-800 text-zinc-400 hover:border-zinc-700'}"
+                                >
+                                  ${opt.lbl}
+                                </button>
+                              `).join('')}
+                            </div>
+                          </div>
+
+                          <button 
+                            onclick="generateAiDiagnostic()"
+                            class="w-full mt-4 py-3 bg-gradient-to-r from-orange-600 to-yellow-500 text-black font-black text-xs uppercase tracking-widest rounded-xl hover:shadow-[0_0_20px_rgba(249,115,22,0.45)] hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center space-x-2"
+                          >
+                            <svg class="w-4 h-4 text-black animate-spin" style="animation-duration: 3s" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275Z" /><path d="m5 3 1 2.5L8.5 6 6 7 5 9.5 4 7 1.5 6 4 5.5Z" /><path d="m19 17 1 2.5 2.5.5-2.5 1-1 2.5-1-2.5-2.5-1 2.5-1Z" /></svg>
+                            <span>Escanear Huella de Hogar</span>
+                          </button>
+                        </div>
+                      </div>
+                    `;
+                }
+            } else if (selectedService) {
+                // Diseño Original Ajustado Compacto para evitar desconfiguraciones de espacio vertical
+                hudContainer.innerHTML = `
+                  <div class="flex flex-col space-y-3">
+                    <div class="flex items-center space-x-4">
+                      <div class="w-14 h-14 rounded-full bg-zinc-950 border border-zinc-700 flex items-center justify-center ${selectedService.color} shadow-[0_0_20px_currentColor]">
+                        ${selectedService.icon}
+                      </div>
+                      <div>
+                        <span class="text-[10px] font-bold tracking-[0.2em] text-orange-500 uppercase">Módulo Seleccionado</span>
+                        <h3 class="text-2xl font-black text-white tracking-wide">${selectedService.name}</h3>
+                      </div>
+                    </div>
                     
-                    <div className={`absolute -bottom-6 text-[10px] font-bold tracking-wider transition-colors duration-300 whitespace-nowrap ${isSelected || isHovered ? 'text-white' : 'text-zinc-400'}`}>
-                      {service.name}
+                    <div class="space-y-3 pt-1">
+                      ${selectedService.links.map(link => `
+                        <a 
+                          href="${link.url}"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          class="w-full py-4 rounded-xl bg-gradient-to-r from-white to-zinc-200 text-black font-extrabold text-sm flex items-center justify-center shadow-lg transition-all hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] active:scale-[0.98]"
+                        >
+                          ${link.label} 
+                          <svg class="w-5 h-5 ml-1 stroke-[2.5]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6" /></svg>
+                        </a>
+                      `).join('')}
                     </div>
-                  </button>
-
-                  {/* SPATIAL TOOLTIP: Descripción del servicio flotando al lado del icono */}
-                  {isSelected && (
-                    <div 
-                      className={`absolute w-56 p-4 bg-zinc-900/95 backdrop-blur-xl border border-zinc-700 rounded-2xl shadow-[0_15px_30px_rgba(0,0,0,0.8)] z-50 animate-in fade-in zoom-in-75 duration-300 pointer-events-none ${getTooltipPosition(service.angle)}`}
-                    >
-                      <p className="text-xs text-zinc-300 leading-relaxed font-light">{service.desc}</p>
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* COLUMNA DERECHA: Consola de Control Lateral HUD / Stark AI Assistant */}
-        <div className="lg:col-span-5 flex flex-col justify-center min-h-[400px]">
-          <div 
-            className="bg-gradient-to-b from-zinc-900/50 to-zinc-950/95 backdrop-blur-xl border border-zinc-800/60 p-8 rounded-3xl shadow-[0_25px_60px_rgba(0,0,0,0.6)] transition-all duration-500 flex flex-col justify-center relative overflow-hidden group min-h-[380px]"
-            onClick={(e) => e.stopPropagation()} 
-          >
-            <div className="absolute top-0 right-0 w-16 h-16 border-t-2 border-r-2 border-orange-500/15 rounded-tr-3xl pointer-events-none transition-colors group-hover:border-orange-500/30"></div>
-            
-            {/* INTERFAZ MODAL DE DIAGNÓSTICO CON IA GEMINI */}
-            {showAiDiagnostic ? (
-              <div className="animate-in fade-in slide-in-from-right-6 duration-400 h-full flex flex-col justify-between">
-                
-                {/* Cabecera del Asistente */}
-                <div className="flex items-center justify-between mb-4 border-b border-zinc-800 pb-3">
-                  <div className="flex items-center space-x-2">
-                    <Bot className="w-5 h-5 text-orange-400 animate-pulse" />
-                    <span className="text-xs font-black tracking-widest text-orange-400 uppercase">Consultor Stark IA</span>
                   </div>
-                  <button 
-                    onClick={() => { setShowAiDiagnostic(false); setAiStep(1); setAiResponse(null); }}
-                    className="text-zinc-500 hover:text-white transition-colors"
-                  >
-                    <X className="w-4 h-4" />
-                  </button>
-                </div>
-
-                {/* Fase 1: Formulario de Preguntas */}
-                {aiStep === 1 && !aiLoading && !aiResponse && (
-                  <div className="space-y-4">
-                    <p className="text-xs text-zinc-400 font-light leading-relaxed">
-                      El arquetipo Stark analizará tu huella de conectividad para construir un ecosistema digital de alta fidelidad.
+                `;
+            } else {
+                hudContainer.innerHTML = `
+                  <div class="flex flex-col justify-center items-center text-center p-4 py-8">
+                    <div class="w-16 h-16 rounded-full border border-dashed border-zinc-700 flex items-center justify-center mb-6 text-zinc-500 animate-[spin_60s_linear_infinite]">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transform -rotate-45"><path d="M12 20h.01" /><path d="M8.5 16.5c3-3 4-3 7 0" /><path d="M5 13a11.5 11.5 0 0 1 14 0" /><path d="M1.5 9.5a19.6 19.6 0 0 1 21 0" /></svg>
+                    </div>
+                    <h4 class="text-xl font-bold text-zinc-200 mb-2 tracking-wide">Netlife Feel HUB</h4>
+                    <p class="text-zinc-500 text-sm max-w-sm leading-relaxed font-light mb-6">
+                      Haz clic sobre las bobinas eléctricas o iconos del reactor para descubrir tu portafolio de soluciones.
                     </p>
-                    
-                    {/* Pregunta 1: Personas en casa */}
-                    <div className="space-y-1">
-                      <label className="text-[10px] font-bold tracking-wider text-zinc-500 uppercase">Personas en tu Hogar</label>
-                      <div className="grid grid-cols-3 gap-2">
-                        {['1-2', '3-4', '5+'].map((opt) => (
-                          <button
-                            key={opt}
-                            onClick={() => setAiAnswers({ ...aiAnswers, householdSize: opt })}
-                            className={`py-2 rounded-xl text-xs font-bold transition-all border ${aiAnswers.householdSize === opt ? 'bg-orange-500/10 border-orange-500 text-orange-400' : 'bg-zinc-950/80 border-zinc-800 text-zinc-400 hover:border-zinc-700'}`}
-                          >
-                            {opt}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Pregunta 2: Teletrabajo */}
-                    <div className="space-y-1">
-                      <label className="text-[10px] font-bold tracking-wider text-zinc-500 uppercase">¿Teletrabajo o Estudio en Línea?</label>
-                      <div className="grid grid-cols-3 gap-2">
-                        {[
-                          { key: 'none', lbl: 'No' },
-                          { key: 'moderate', lbl: '1 Persona' },
-                          { key: 'heavy', lbl: 'Múltiples' }
-                        ].map((opt) => (
-                          <button
-                            key={opt.key}
-                            onClick={() => setAiAnswers({ ...aiAnswers, remoteActivity: opt.key })}
-                            className={`py-2 rounded-xl text-xs font-bold transition-all border ${aiAnswers.remoteActivity === opt.key ? 'bg-orange-500/10 border-orange-500 text-orange-400' : 'bg-zinc-950/80 border-zinc-800 text-zinc-400 hover:border-zinc-700'}`}
-                          >
-                            {opt.lbl}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Pregunta 3: Gaming */}
-                    <div className="space-y-1">
-                      <label className="text-[10px] font-bold tracking-wider text-zinc-500 uppercase">¿Amantes de los videojuegos (Gamers)?</label>
-                      <div className="grid grid-cols-2 gap-2">
-                        {[
-                          { key: 'yes', lbl: 'Sí (Competitivo)' },
-                          { key: 'no', lbl: 'No / Casual' }
-                        ].map((opt) => (
-                          <button
-                            key={opt.key}
-                            onClick={() => setAiAnswers({ ...aiAnswers, hasGamers: opt.key })}
-                            className={`py-2 rounded-xl text-xs font-bold transition-all border ${aiAnswers.hasGamers === opt.key ? 'bg-orange-500/10 border-orange-500 text-orange-400' : 'bg-zinc-950/80 border-zinc-800 text-zinc-400 hover:border-zinc-700'}`}
-                          >
-                            {opt.lbl}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Pregunta 4: Prioridades */}
-                    <div className="space-y-1">
-                      <label className="text-[10px] font-bold tracking-wider text-zinc-500 uppercase">Prioridad Máxima del Hogar</label>
-                      <div className="grid grid-cols-2 gap-2">
-                        {[
-                          { key: 'seguridad', lbl: 'Blindar / Proteger' },
-                          { key: 'productividad', lbl: 'Trabajar / Crear' },
-                          { key: 'entretenimiento', lbl: 'Stream / Relax' },
-                          { key: 'conectividad', lbl: 'Estabilidad Total' }
-                        ].map((opt) => (
-                          <button
-                            key={opt.key}
-                            onClick={() => setAiAnswers({ ...aiAnswers, primaryFocus: opt.key })}
-                            className={`py-2 rounded-xl text-xs font-bold transition-all border ${aiAnswers.primaryFocus === opt.key ? 'bg-orange-500/10 border-orange-500 text-orange-400' : 'bg-zinc-950/80 border-zinc-800 text-zinc-400 hover:border-zinc-700'}`}
-                          >
-                            {opt.lbl}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
 
                     <button 
-                      onClick={handleGenerateDiagnostic}
-                      className="w-full mt-4 py-3 bg-gradient-to-r from-orange-600 to-yellow-500 text-black font-black text-xs uppercase tracking-widest rounded-xl hover:shadow-[0_0_20px_rgba(249,115,22,0.45)] hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center space-x-2"
+                      onclick="openAiDiagnostic()"
+                      class="w-full py-3.5 bg-zinc-950 border border-orange-500/20 rounded-xl text-orange-400 font-extrabold text-xs uppercase tracking-widest hover:border-orange-500/50 hover:bg-orange-500/5 active:scale-[0.99] transition-all flex items-center justify-center space-x-2 shadow-[0_0_20px_rgba(249,115,22,0.05)]"
                     >
-                      <Sparkles className="w-4 h-4 text-black animate-spin" style={{ animationDuration: '3s' }} />
-                      <span>Escanear Huella de Hogar</span>
+                      <svg class="w-4 h-4 text-orange-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275Z" /><path d="m5 3 1 2.5L8.5 6 6 7 5 9.5 4 7 1.5 6 4 5.5Z" /><path d="m19 17 1 2.5 2.5.5-2.5 1-1 2.5-1-2.5-2.5-1 2.5-1Z" /></svg>
+                      <span>Auditoría de Hogar Inteligente IA</span>
                     </button>
                   </div>
-                )}
-
-                {/* Fase 2: Cargador / Animación de Escaneo Stark */}
-                {aiLoading && (
-                  <div className="flex flex-col justify-center items-center py-12 text-center animate-pulse">
-                    <div className="relative w-20 h-20 mb-6">
-                      <div className="absolute inset-0 border-4 border-dashed border-orange-500 border-t-transparent rounded-full animate-spin"></div>
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <Activity className="w-8 h-8 text-orange-400" />
-                      </div>
-                    </div>
-                    <h5 className="text-sm font-extrabold text-white mb-2">PROCESANDO HUELLA DE CONECTIVIDAD</h5>
-                    <p className="text-zinc-500 text-xs font-light max-w-xs">
-                      Aura AI se está conectando a la API de Gemini para analizar tus datos y redactar tu plan de beneficios humanos personalizados...
-                    </p>
-                  </div>
-                )}
-
-                {/* Fase 3: Renderizado Inteligente de la respuesta de Gemini */}
-                {aiResponse && !aiLoading && (
-                  <div className="flex flex-col justify-between h-full">
-                    <div className="overflow-y-auto max-h-[320px] pr-2 custom-scrollbar border-b border-zinc-800/60 pb-4">
-                      {formatMarkdown(aiResponse)}
-                    </div>
-                    
-                    <button 
-                      onClick={() => { setAiResponse(null); setAiStep(1); }}
-                      className="w-full mt-4 py-3 bg-zinc-900 border border-zinc-800 text-zinc-300 font-extrabold text-xs uppercase tracking-wider rounded-xl hover:bg-zinc-800 transition-colors flex items-center justify-center space-x-2"
-                    >
-                      <RefreshCw className="w-4 h-4" />
-                      <span>Hacer Nuevo Diagnóstico</span>
-                    </button>
-                  </div>
-                )}
-
-                {/* Errores de API */}
-                {aiError && !aiLoading && (
-                  <div className="flex flex-col items-center justify-center text-center py-8">
-                    <div className="w-12 h-12 rounded-full bg-red-950/50 border border-red-500/30 flex items-center justify-center text-red-400 mb-4">
-                      <X className="w-5 h-5" />
-                    </div>
-                    <p className="text-xs text-zinc-300 font-light mb-4">{aiError}</p>
-                    <button 
-                      onClick={handleGenerateDiagnostic}
-                      className="py-2.5 px-6 bg-zinc-900 border border-zinc-800 rounded-xl text-xs font-bold text-white hover:bg-zinc-800 transition-all"
-                    >
-                      Reintentar Escaneo
-                    </button>
-                  </div>
-                )}
-              </div>
-            ) : selectedService ? (
-              // PORTAFOLIO DE SOLUCIONES INTEGRADO (DISEÑO ORIGINAL SIN REDUNDANCIA)
-              <div className="animate-in fade-in slide-in-from-right-6 duration-400 flex flex-col space-y-4">
-                <div className="flex items-center space-x-4">
-                  <div className={`w-14 h-14 rounded-full bg-zinc-950 border border-zinc-700 flex items-center justify-center ${selectedService.color} shadow-[0_0_20px_currentColor]`}>
-                    <selectedService.icon className="w-6 h-6" />
-                  </div>
-                  <div>
-                    <span className="text-[10px] font-bold tracking-[0.2em] text-orange-500 uppercase">Módulo Seleccionado</span>
-                    <h3 className="text-2xl font-black text-white tracking-wide">{selectedService.name}</h3>
-                  </div>
-                </div>
-                
-                <div className="space-y-4 pt-2">
-                  {selectedService.links.map((link, idx) => (
-                    <a 
-                      key={idx}
-                      href={link.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-full py-4 rounded-xl bg-gradient-to-r from-white to-zinc-200 text-black font-extrabold text-sm flex items-center justify-center shadow-lg transition-all hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] active:scale-[0.98]"
-                    >
-                      {link.label} <ChevronRight className="w-5 h-5 ml-1 stroke-[2.5]" />
-                    </a>
-                  ))}
-                </div>
-              </div>
-            ) : (
-              // PANTALLA INICIAL DE LA CONSOLA (CON BOTÓN DE INTEGRACIÓN A GEMINI)
-              <div className="flex flex-col justify-center items-center text-center p-4 py-8 animate-in fade-in duration-400">
-                <div className="w-16 h-16 rounded-full border border-dashed border-zinc-700 flex items-center justify-center mb-6 text-zinc-500 animate-[spin_60s_linear_infinite]">
-                  <Wifi className="w-6 h-6 transform -rotate-45" />
-                </div>
-                <h4 className="text-xl font-bold text-zinc-200 mb-2 tracking-wide">Netlife Feel HUB</h4>
-                <p className="text-zinc-500 text-sm max-w-sm leading-relaxed font-light mb-6">
-                  Haz clic sobre las bobinas eléctricas o iconos del reactor para descubrir tu portafolio de soluciones.
-                </p>
-
-                {/* BOTÓN DISPARADOR DE INTELIGENCIA ARTIFICIAL GEMINI */}
-                <button 
-                  onClick={() => { setIsReactorActive(true); setShowAiDiagnostic(true); }}
-                  className="w-full py-3.5 bg-zinc-950 border border-orange-500/20 rounded-xl text-orange-400 font-extrabold text-xs uppercase tracking-widest hover:border-orange-500/50 hover:bg-orange-500/5 active:scale-[0.99] transition-all flex items-center justify-center space-x-2 shadow-[0_0_20px_rgba(249,115,22,0.05)]"
-                >
-                  <Sparkles className="w-4 h-4 text-orange-400" />
-                  <span>Auditoría de Hogar Inteligente IA</span>
-                </button>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-
-      {/* LEYENDA INSTRUCTIVA ACLARADA Y TOTALMENTE VISIBLE */}
-      <div className="absolute bottom-6 left-0 w-full text-center px-4 pointer-events-none z-20">
-        <p className="text-zinc-300 text-xs tracking-wider font-semibold max-w-3xl mx-auto leading-relaxed drop-shadow-md">
-          Haz clic en las bobinas de energía para expandir tu ecosistema digital o en la <span className="text-orange-500 font-extrabold">N</span> central para auditar tu plan activo.
-        </p>
-      </div>
-
-      {/* VENTANA MODAL DE AUDITORÍA (CONSULTA DE ESTATUS DE CÉDULA) */}
-      {showConsultModal && (
-        <div 
-          className="absolute inset-0 z-[100] flex items-center justify-center p-6 bg-black/85 backdrop-blur-md animate-in fade-in duration-200"
-          onClick={() => setShowConsultModal(false)}
-        >
-          <div 
-            className="modal-content w-full max-w-md bg-zinc-900 border border-orange-500/20 rounded-3xl p-8 shadow-[0_0_60px_rgba(249,115,22,0.2)] relative transform transition-all scale-100 animate-in zoom-in-95 duration-300"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button onClick={() => setShowConsultModal(false)} className="absolute top-5 right-5 text-zinc-500 hover:text-white bg-zinc-800 hover:bg-zinc-700 transition-colors rounded-full p-1.5">
-              <X className="w-4 h-4" />
-            </button>
-            <div className="flex justify-center mb-6 mt-4">
-              <div className="relative w-16 h-16">
-                <div className="absolute inset-0 border-4 border-orange-500 border-t-transparent rounded-full animate-spin"></div>
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <Search className="w-6 h-6 text-orange-400 animate-pulse" />
-                </div>
-              </div>
-            </div>
-            <h2 className="text-2xl font-black text-center mb-2 tracking-wide">Consulta tu <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-yellow-400">Estatus</span></h2>
-            <p className="text-center text-zinc-400 text-sm leading-relaxed mb-6 font-light">Ingresa tu número de cédula o código de cliente para escanear en tiempo real las soluciones digitales activas en tu cuenta.</p>
-            <div className="space-y-4">
-              <input type="text" placeholder="Ej. 17xxxxxxxx" className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3.5 text-white placeholder-zinc-600 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-all font-medium text-sm" />
-              <button className="w-full py-4 bg-gradient-to-r from-orange-600 to-yellow-500 text-black font-black tracking-wider text-xs uppercase rounded-xl hover:shadow-[0_0_25px_rgba(249,115,22,0.35)] hover:brightness-110 transition-all active:scale-[0.99]">Escanear mis servicios</button>
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
+                `;
+            }
+        }
+    </script>
+</body>
+</html>
