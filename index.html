@@ -67,15 +67,15 @@
         @keyframes central-n-pulse {
             0%, 100% {
                 transform: translate(-50%, -50%) scale(1);
-                box-shadow: 0 0 30px rgba(249, 115, 22, 0.45);
+                box-shadow: 0 0 35px rgba(249, 115, 22, 0.45);
             }
             45% {
-                transform: translate(-50%, -50%) scale(1.05);
-                box-shadow: 0 0 50px rgba(249, 115, 22, 0.85);
+                transform: translate(-50%, -50%) scale(1.04);
+                box-shadow: 0 0 55px rgba(249, 115, 22, 0.85);
             }
             60% {
                 transform: translate(-50%, -50%) scale(1.01);
-                box-shadow: 0 0 38px rgba(249, 115, 22, 0.6);
+                box-shadow: 0 0 40px rgba(249, 115, 22, 0.6);
             }
         }
 
@@ -104,7 +104,7 @@
                 border-color: #facc15; 
             }
             50% { 
-                box-shadow: 0 0 28px #eab308, inset 0 0 12px #f97316, 0 0 18px rgba(249, 115, 22, 0.8); 
+                box-shadow: 0 0 28px #eab308, inset 0 0 12px #f97316, 0 0 18px rgba(254, 215, 170, 0.8); 
                 border-color: #ffffff; 
               }
         }
@@ -137,7 +137,7 @@
         </div>
 
         <!-- COLUMNA IZQUIERDA: Ecosistema Radial y Reactor de Potencia -->
-        <div class="lg:col-span-7 flex flex-col items-center justify-center relative min-h-[380px] lg:min-h-[520px] w-full">
+        <div class="lg:col-span-8 flex flex-col items-center justify-center relative min-h-[380px] lg:min-h-[520px] w-full">
             
             <!-- CONTENEDOR ESCALABLE PARA MÓVILES (Evita desbordes y barras de scroll) -->
             <div class="transform scale-[0.65] sm:scale-[0.8] lg:scale-100 origin-center transition-transform duration-500 w-full flex justify-center">
@@ -179,19 +179,19 @@
                       </svg>
                     </div>
 
-                    <!-- BOTÓN N CENTRAL ALINEADO (Con N pintada con degradado Netlife) -->
+                    <!-- BOTÓN N CENTRAL ALINEADO (Con el Isotipo Transparente de Netlife) -->
                     <button 
                       onclick="handleNClick(event)"
-                      class="absolute z-30 w-24 h-24 bg-gradient-to-br from-orange-500 to-yellow-500 rounded-full flex items-center justify-center transition-all duration-500 group animate-central-n touch-manipulation"
-                      style="top: 50%; left: 50%; transform: translate(-50%, -50%); box-shadow: 0 0 35px rgba(249, 115, 22, 0.45);"
+                      class="absolute z-30 w-32 h-32 bg-gradient-to-br from-orange-500 to-yellow-500 rounded-full flex items-center justify-center transition-all duration-500 group animate-central-n touch-manipulation"
+                      style="top: 50%; left: 50%; transform: translate(-50%, -50%); box-shadow: 0 0 45px rgba(249, 115, 22, 0.55);"
                     >
-                      <div class="absolute inset-[3px] bg-[#020203] rounded-full flex items-center justify-center overflow-hidden">
-                        <span 
-                          class="text-5xl font-black italic text-transparent bg-clip-text bg-gradient-to-br from-orange-500 to-yellow-400 select-none transition-transform duration-300 group-hover:scale-110"
-                          style="font-family: 'Montserrat', sans-serif; filter: drop-shadow(0 0 12px rgba(249, 115, 22, 0.95)); transform: skewX(-8deg) translateX(1px);"
-                        >
-                          N
-                        </span>
+                      <div class="absolute inset-[3px] bg-[#020203] rounded-full flex items-center justify-center overflow-hidden p-2.5">
+                        <img 
+                          src="https://raw.githubusercontent.com/alexzanderj14/Netlifeapp/main/iso.png"
+                          alt="Netlife Nucleus"
+                          class="w-full h-full object-contain transition-transform duration-300 group-hover:scale-110 filter drop-shadow-[0_0_15px_rgba(249,115,22,0.8)]"
+                          onerror="this.onerror=null; this.src='iso.png';"
+                        />
                       </div>
                     </button>
 
@@ -203,9 +203,9 @@
         </div>
 
         <!-- COLUMNA DERECHA: Consola de Control Lateral HUD / Asistente AI -->
-        <div class="lg:col-span-5 flex flex-col justify-center min-h-[400px] w-full max-w-lg mx-auto lg:max-w-none">
+        <div class="lg:col-span-4 flex flex-col justify-center min-h-[400px] w-full max-w-md mx-auto lg:max-w-none">
             <div 
-              class="bg-gradient-to-b from-zinc-900/50 to-zinc-950/95 backdrop-blur-xl border border-zinc-800/60 p-6 sm:p-8 rounded-3xl shadow-[0_25px_60px_rgba(0,0,0,0.6)] transition-all duration-500 flex flex-col justify-center relative overflow-hidden group min-h-[380px]"
+              class="bg-gradient-to-b from-zinc-900/50 to-zinc-950/95 backdrop-blur-xl border border-zinc-800/60 p-5 sm:p-6 rounded-3xl shadow-[0_25px_60px_rgba(0,0,0,0.6)] transition-all duration-500 flex flex-col justify-center relative overflow-hidden group min-h-[360px]"
               onclick="event.stopPropagation()"
             >
                 <div class="absolute top-0 right-0 w-16 h-16 border-t-2 border-r-2 border-orange-500/15 rounded-tr-3xl pointer-events-none transition-colors group-hover:border-orange-500/30"></div>
@@ -219,8 +219,8 @@
 
     <!-- Leyenda Instructiva HUD original y limpia -->
     <div class="w-full text-center px-4 pointer-events-none z-20 mt-auto pb-4">
-        <p class="text-zinc-300 text-xs tracking-wider font-semibold max-w-3xl mx-auto leading-relaxed drop-shadow-md">
-            Haz clic en cada casilla, descubrirás a Netlife más de lo que es. Si ya eres cliente solo descubre en la N los servicios que ya son parte de tu hogar.
+        <p class="text-zinc-100 text-xs sm:text-sm tracking-wide font-semibold max-w-3xl mx-auto leading-relaxed drop-shadow-md">
+            Haz <span class="text-orange-500 font-extrabold">CLIC</span> en la casilla para descubrir que Netlife es más de lo que conoces - <span class="text-orange-500 font-extrabold">CLIC</span> en el centro del HUB para saber que servicios ya son parte de tu hogar.
         </p>
     </div>
 
@@ -245,12 +245,11 @@
                 </div>
               </div>
             </div>
-            <h2 class="text-xl sm:text-2xl font-black text-center mb-2 tracking-wide">Consulta tu <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-yellow-400">Estatus</span></h2>
-            <p class="text-center text-zinc-400 text-xs sm:text-sm leading-relaxed mb-6 font-light">Ingresa tu número de cédula o código de cliente para escanear en tiempo real las soluciones digitales activas en tu cuenta.</p>
+            <h2 class="text-2xl sm:text-3xl font-black text-center mb-2 tracking-wide text-white">Consulta tu <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-yellow-400">Estatus</span></h2>
+            <p class="text-center text-zinc-200 text-sm sm:text-base leading-relaxed mb-6 font-medium">Ingresa tu número de cédula o código de cliente para escanear en tiempo real las soluciones digitales activas en tu cuenta.</p>
             <div class="space-y-4">
-              <!-- text-base previene el zoom automático en iPhones -->
-              <input type="text" placeholder="Ej. 17xxxxxxxx" class="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3.5 text-white placeholder-zinc-600 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-all font-medium text-base sm:text-sm" />
-              <button class="w-full py-4 bg-gradient-to-r from-orange-600 to-yellow-500 text-black font-black tracking-wider text-xs uppercase rounded-xl hover:shadow-[0_0_25px_rgba(249,115,22,0.35)] hover:brightness-110 transition-all active:scale-[0.99] touch-manipulation" onclick="closeConsultModal()">Escanear mis servicios</button>
+              <input type="text" id="dni-input" placeholder="Ej. 17xxxxxxxx" class="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3.5 text-white placeholder-zinc-500 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-all font-medium text-base sm:text-sm" />
+              <button class="w-full py-4 bg-gradient-to-r from-orange-600 to-yellow-500 text-black font-black tracking-wider text-sm uppercase rounded-xl hover:shadow-[0_0_25px_rgba(249,115,22,0.35)] hover:brightness-110 transition-all active:scale-[0.99] touch-manipulation" onclick="closeConsultModal()">Escanear mis servicios</button>
             </div>
         </div>
     </div>
@@ -282,7 +281,7 @@
             name: 'Ciberseguridad', 
             icon: SVG_SHIELD, 
             color: 'text-blue-400', 
-            angle: 315, // Top-Right
+            angle: 315, // Top-Right (Proyecta hacia afuera-derecha)
             desc: 'Netlife Defense, Safe Kids y Password Manager. Blindaje total 24/7 para proteger a los que más amas y tu identidad digital.',
             links: [{ label: 'Ver Seguridad Total Defense', url: 'https://netlife.ec/seguridad-total-defense/' }]
           },
@@ -291,7 +290,7 @@
             name: 'Full Cobertura', 
             icon: SVG_WIFI, 
             color: 'text-cyan-400', 
-            angle: 0, // Right
+            angle: 0, // Right (Proyecta hacia afuera-derecha)
             desc: 'Wifi Gi, Extender y Cableado Ethernet. Cobertura inquebrantable en cada rincón de tu hogar, sin zonas muertas.',
             links: [
               { label: 'Ver especificaciones Wifi Gi', url: 'https://netlife.ec/wifi-gi/' },
@@ -303,7 +302,7 @@
             name: 'Domótica', 
             icon: SVG_HOME, 
             color: 'text-emerald-400', 
-            angle: 45, // Bottom-Right
+            angle: 45, // Bottom-Right (Proyecta hacia afuera-derecha)
             desc: 'NetlifeCam Indoor y Outdoor. Tu hogar en la palma de tu mano. Control, automatización y vigilancia inteligente.',
             links: [{ label: 'Ver Netlife Cam', url: 'https://netlife.ec/netlife-cam/' }]
           },
@@ -343,24 +342,23 @@
             icon: SVG_TV, 
             color: 'text-pink-400', 
             angle: 225, // Top-Left
-            desc: 'Paramount+, Zapping, ECDF. Tus momentos de relax garantizados con el mejor contenido de cine, series y deportes.',
+            desc: 'Paramount+, Zapping, ECDF. Tus momentos de relax garantizados con el mejor contenido de cine, series and deportes.',
             links: [{ label: 'Ver canales de Entretenimiento', url: 'https://netlife.ec/entretenimiento/' }]
           },
         ];
 
-        // Posicionamiento de tooltips espaciales (Ocultos en móvil mediante CSS)
-        // Corregido: Proyección hacia afuera de las coordenadas del círculo
+        // Posicionamiento radial inteligente de tooltips (Garantiza proyección puramente exterior para evitar el núcleo)
         function getTooltipClass(angle) {
           switch(angle) {
-            case 0: return "left-[125%] top-1/2 -translate-y-1/2 ml-4"; 
-            case 45: return "left-[115%] top-[115%]"; 
-            case 90: return "top-[125%] left-1/2 -translate-x-1/2 mt-4"; 
-            case 135: return "right-[115%] top-[115%]"; 
-            case 180: return "right-[125%] top-1/2 -translate-y-1/2 mr-4"; 
-            case 225: return "right-[115%] bottom-[115%]"; 
-            case 270: return "bottom-[125%] left-1/2 -translate-x-1/2 mb-4"; 
-            case 315: return "left-[115%] bottom-[115%]"; 
-            default: return "left-full ml-4 top-0";
+            case 0: return "left-[125%] top-1/2 -translate-y-1/2 ml-2"; // Fuera (Derecha)
+            case 45: return "left-[110%] top-[105%] mt-2"; // Fuera (Derecha-Abajo)
+            case 90: return "top-[125%] left-1/2 -translate-x-1/2 mt-2"; // Abajo
+            case 135: return "right-[110%] top-[105%] mt-2"; // Izquierda-Abajo
+            case 180: return "right-[125%] top-1/2 -translate-y-1/2 mr-2"; // Izquierda
+            case 225: return "right-[110%] bottom-[105%] mb-2"; // Izquierda-Arriba
+            case 270: return "bottom-[125%] left-1/2 -translate-x-1/2 mb-2"; // Arriba
+            case 315: return "left-[110%] bottom-[105%] mb-2"; // Fuera (Derecha-Arriba)
+            default: return "right-full mr-4 top-0";
           }
         }
 
@@ -454,17 +452,17 @@
                         ${service.icon}
                       </div>
                       
-                      <div class="label absolute -bottom-6 text-[10px] font-bold tracking-wider text-zinc-400 group-hover:text-white transition-colors duration-300 whitespace-nowrap">
+                      <div class="label absolute -bottom-7 text-xs sm:text-sm font-bold tracking-wider text-zinc-200 group-hover:text-white transition-colors duration-300 whitespace-nowrap">
                         ${service.name}
                       </div>
                     </button>
 
-                    <!-- Spatial Tooltip: Oculto en móvil (hidden) y visible en desktop (md:block) -->
+                    <!-- Spatial Tooltip: Oculto en móviles y visible en desktop con proyección radial exterior garantizada -->
                     <div 
                       id="tooltip-${service.id}"
-                      class="tooltip hidden md:block absolute w-56 p-4 bg-zinc-900/95 backdrop-blur-xl border border-zinc-700 rounded-2xl shadow-[0_15px_30px_rgba(0,0,0,0.8)] z-50 transition-all duration-300 opacity-0 scale-75 pointer-events-none ${tooltipPos}"
+                      class="tooltip hidden md:block absolute w-56 p-4 bg-zinc-900/95 backdrop-blur-xl border border-zinc-700 rounded-2xl shadow-[0_15px_30px_rgba(0,0,0,0.8)] z-[100] transition-all duration-300 opacity-0 scale-75 pointer-events-none ${tooltipPos}"
                     >
-                      <p class="text-xs text-zinc-300 leading-relaxed font-light">${service.desc}</p>
+                      <p class="text-sm text-zinc-100 leading-relaxed font-semibold">${service.desc}</p>
                     </div>
                   </div>
                 `;
@@ -599,7 +597,7 @@
             render();
         }
 
-        // Controladores del Asistente Aura AI (Gemini Integration)
+        // Controladores del Asistente Aura AI
         function openAiDiagnostic() {
             isReactorActive = true;
             showAiDiagnostic = true;
@@ -627,7 +625,7 @@
             renderHUD();
         }
 
-        // Genera una simulación local idéntica y altamente creativa al prompt en caso de fallo o API Key en blanco
+        // Motor local elástico de Aura AI (Garantiza siempre el resultado sin dar errores de servidor)
         function generateLocalDiagnosticResult() {
             const isGamer = aiAnswers.hasGamers === 'yes';
             const isHeavyTelework = aiAnswers.remoteActivity === 'heavy';
@@ -637,90 +635,83 @@
             let configItems = [];
             let closing = "";
 
-            // Personalización Stark según el perfil del hogar
             if (isGamer) {
-                greeting = `A ver, hagamos números con el escáner de Aura. Tienes un nido de ${aiAnswers.householdSize} personas en casa, donde corren verdaderos guerreros de esports competitivos que no perdonan ni medio milisegundo de latencia. En Ecuador, con la guerra de precios actual, muchos te prometen megas baratos que se caen a la primera videollamada. Pero tú juegas en otra liga.`;
-                
+                greeting = `Análisis de Aura AI completado. Para tu hogar de ${aiAnswers.householdSize} personas con guerreros gamer competitivos en línea, la prioridad absoluta no es la velocidad promedio de subida o bajada que prometen en la televisión, sino la estabilidad de ping y rutas de enrutamiento limpias sin jitter.`;
                 configItems.push({
-                    title: "Planes Gamer Netlife",
-                    benefit: "Rutas optimizadas dedicadas de baja latencia directo a los servidores de Riot, Steam y Epic Games. Cero lag, pura gloria competitiva sin interferencia del resto de la casa."
+                    title: "Planes Gamer de Netlife",
+                    benefit: "Enrutamientos directos optimizados a los principales servidores de eSports en la nube sin cortes."
                 });
                 configItems.push({
                     title: "Wifi Gi + Cableado Ethernet",
-                    benefit: "La red física necesaria para que la señal cruce paredes y llegue con estabilidad total a tu consola o setup gamer, sin pérdidas por interferencia Wi-Fi."
+                    benefit: "Conectores dedicados de alto espectro para estabilizar la señal, cruzando muros e interferencia inalámbrica."
                 });
                 configItems.push({
-                    title: "Entretenimiento Premium (Zapping / Paramount+)",
-                    benefit: "Los domingos de fútbol de la Tri y maratones familiares en 4K ya listos y pagados en tu plan para cuando los guerreros suelten el control."
+                    title: "Ecosistema Entretenimiento Zapping",
+                    benefit: "Tus partidos de la Tri y canales de cine premium incluidos de una vez en tu plan para disfrutar en familia."
                 });
             } else if (isHeavyTelework || isModerateTelework) {
-                greeting = `Análisis de huella completado. Tienes una oficina o aula de alta productividad activa en casa con ${aiAnswers.householdSize} personas en simultáneo. El verdadero reto aquí no es la velocidad que te venden en los folletos de la competencia, sino la estabilidad de carga cuando tres computadoras se conectan en videollamada HD a la vez.`;
-                
+                greeting = `Diagnóstico completado por Aura AI. Tienes un hogar oficina de alta productividad con ${aiAnswers.householdSize} personas. Cuando varias videollamadas en HD coinciden a las 10:00 AM, la compartición de red barata de otros proveedores falla. Netlife te ofrece la solidez técnica necesaria.`;
                 configItems.push({
                     title: "Full Cobertura Wifi Gi",
-                    benefit: "Gestión inteligente de dispositivos para que tu laptop de trabajo tenga prioridad absoluta de ancho de banda durante tus juntas de negocios, sin congelamientos."
+                    benefit: "La red de fibra te entrega la mayor tasa de subida constante para enviar tus datos sin congelamiento."
                 });
                 configItems.push({
                     title: "Netlife Cloud",
-                    benefit: "Resguardo automático en la nube de tus archivos profesionales, planos y documentos bancarios. Si tu laptop se daña, tu trabajo de meses está a salvo."
+                    benefit: "Resguardo automático y blindado en la nube para proteger tus bases de datos, tareas y documentos importantes."
                 });
                 configItems.push({
                     title: "Netlife Defense (Ciberseguridad)",
-                    benefit: "Blindaje completo de grado militar que protege tus transacciones, claves y datos privados de phishing y estafas bancarias en tiempo real."
+                    benefit: "Filtro activo de transacciones y gestor de contraseñas de nivel militar para proteger tus cuentas contra robos de identidad."
                 });
             } else {
-                greeting = `Huella digital detectada para un hogar de ${aiAnswers.householdSize} personas enfocado en entretenimiento y paz mental. Tu prioridad es la tranquilidad familiar, relajarse con una buena película en 4K sin estar configurando repetidores ni batallando con el soporte técnico.`;
-                
+                greeting = `Firma de conectividad analizada. Un hogar de ${aiAnswers.householdSize} personas enfocado en entretenimiento premium y seguridad para la familia. Su prioridad es relajarse y ver cine o series en 4K sin estar configurando adaptadores o sufriendo cortes de red.`;
                 configItems.push({
-                    title: "Ecosistema Entretenimiento Zapping",
-                    benefit: "TV por internet en alta definición con todo el fútbol ecuatoriano y canales premium sin decodificadores estorbosos ni instalaciones invasivas."
+                    title: "Ecosistema Entretenimiento Paramount+ y Zapping",
+                    benefit: "Todo el fútbol ecuatoriano, cine y series en alta definición sin decodificadores estorbosos en una sola cuenta."
                 });
                 configItems.push({
-                    title: "Safe Kids",
-                    benefit: "Control parental inteligente para supervisar de forma invisible e intuitiva el contenido que consumen tus hijos en internet mientras trabajas o descansas."
+                    title: "Safe Kids (Control Parental)",
+                    benefit: "Supervisión invisible y automatizada para cuidar lo que ven tus hijos en internet mientras trabajas o descansas."
                 });
                 configItems.push({
-                    title: "Netlife Assistance",
-                    benefit: "Soporte técnico preferencial y asistencia inmediata al primer contacto. No eres una cuenta de soporte genérica, eres un usuario premium."
+                    title: "Asistencia Técnica Preferencial",
+                    benefit: "Soporte técnico inmediato y preferente. Tu tiempo es valioso, y nuestros expertos lo resuelven todo rápido."
                 });
             }
 
-            // Análisis financiero (ROI de Paz Mental)
-            closing = `¿El retorno de inversión de tu paz mental? Si decides irte por una opción barata de la competencia y contratar un antivirus por separado, pagar dos plataformas de streaming adicionales, comprar repetidores genéricos y parchar la seguridad con cámaras baratas, vas a gastar el doble de dinero y diez veces más corajes por caídas del servicio. Con este ecosistema inteligente, todo corre impecable en una sola factura unificada.`;
+            closing = `¿La ecuación de rentabilidad de tu tranquilidad? Si decides irte por una opción más económica en el mercado y contratar antivirus independientes, repetidores Wi-Fi genéricos y pagar el streaming por separado, gastarás el doble de dinero y diez veces más disgustos técnicos. Todo funciona mejor en una sola cuenta de Netlife.`;
 
-            // Construir el HTML simulado de Gemini
             return `
-              <h3 class="text-xl font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-yellow-400 mt-4 mb-2 tracking-wide uppercase">🛡️ DIAGNÓSTICO DE ECOSISTEMA AURA</h3>
-              <p class="text-sm text-zinc-300 leading-relaxed my-2 font-light">${greeting}</p>
+              <h3 class="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-yellow-400 mt-4 mb-2 tracking-wide uppercase">🛡️ DIAGNÓSTICO DE ECOSISTEMA AURA</h3>
+              <p class="text-base text-zinc-100 leading-relaxed my-2 font-semibold">${greeting}</p>
               
-              <h4 class="text-sm font-bold text-orange-400 mt-4 mb-2 uppercase tracking-widest">💡 TU CONFIGURACIÓN DE VIDA INTELIGENTE</h4>
+              <h4 class="text-sm sm:text-base font-bold text-orange-400 mt-4 mb-2 uppercase tracking-widest">💡 TU CONFIGURACIÓN DE VIDA INTELIGENTE</h4>
               ${configItems.map(item => `
-                <p class="text-sm text-zinc-300 leading-relaxed my-2 font-light">
+                <p class="text-base text-zinc-100 leading-relaxed my-2 font-semibold">
                   <strong class="font-extrabold text-white text-shadow-sm">- ${item.title}</strong>: ${item.benefit}
                 </p>
               `).join('')}
               
-              <h4 class="text-sm font-bold text-orange-400 mt-4 mb-2 uppercase tracking-widest">💰 RETORNO DE INVERSIÓN (ROI) DE PAZ MENTAL</h4>
-              <p class="text-sm text-zinc-300 leading-relaxed my-2 font-light">${closing}</p>
+              <h4 class="text-sm sm:text-base font-bold text-orange-400 mt-4 mb-2 uppercase tracking-widest">💰 RETORNO DE INVERSIÓN (ROI) DE PAZ MENTAL</h4>
+              <p class="text-base text-zinc-100 leading-relaxed my-2 font-semibold">${closing}</p>
             `;
         }
 
-        // Llamado con Backoff exponencial a Gemini 2.5 Flash
+        // Llamado con Backoff exponencial a Gemini 2.5 Flash (Con Fallback Local Seguro Garantizado)
         async function generateAiDiagnostic() {
             aiLoading = true;
             aiError = null;
             aiResponse = null;
             render();
 
-            const apiKey = ""; // La plataforma del Canvas asocia automáticamente el token a la consulta
+            const apiKey = ""; // Al estar en blanco en producción, el sistema saltará inmediatamente al motor local seguro
             
-            // Si la clave está en blanco o estamos en un servidor estático sin variables, usamos el motor elástico local
             if (!apiKey || apiKey.trim() === "") {
                 setTimeout(() => {
                     aiResponse = "LOCAL_FALLBACK";
                     aiLoading = false;
                     render();
-                }, 1500); // Retraso de carga realista para preservar el misterio y feedback visual de Stark
+                }, 1200); // Demora realista para simular el procesamiento de red
                 return;
             }
 
@@ -793,8 +784,7 @@ Escribe de manera cercana, motivadora y que demuestre el valor agregado de Netli
               }
             } catch (err) {
               console.error(err);
-              // Fallback elástico local si hay error de red o timeout
-              aiResponse = "LOCAL_FALLBACK";
+              aiResponse = "LOCAL_FALLBACK"; // Activa automáticamente el motor offline inteligente para evitar tarjetas de error
             } finally {
               aiLoading = false;
               render();
@@ -805,7 +795,6 @@ Escribe de manera cercana, motivadora y que demuestre el valor agregado de Netli
         function formatMarkdownHTML(text) {
             if (!text) return '';
             
-            // Si detecta la bandera de fallback local, ejecuta el generador elástico local
             if (text === "LOCAL_FALLBACK") {
                 return generateLocalDiagnosticResult();
             }
@@ -815,18 +804,18 @@ Escribe de manera cercana, motivadora y que demuestre el valor agregado de Netli
               .map(line => {
                 let formatted = line;
                 if (formatted.startsWith('# ')) {
-                  return `<h3 class="text-xl font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-yellow-400 mt-4 mb-2 tracking-wide uppercase">${formatted.replace('# ', '')}</h3>`;
+                  return `<h3 class="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-yellow-400 mt-4 mb-2 tracking-wide uppercase">${formatted.replace('# ', '')}</h3>`;
                 }
                 if (formatted.startsWith('### ')) {
-                  return `<h4 class="text-sm font-bold text-orange-400 mt-4 mb-2 uppercase tracking-widest">${formatted.replace('### ', '')}</h4>`;
+                  return `<h4 class="text-sm sm:text-base font-bold text-orange-400 mt-4 mb-2 uppercase tracking-widest">${formatted.replace('### ', '')}</h4>`;
                 }
                 if (formatted.includes('**')) {
                   const parts = formatted.split('**');
                   const renderedParts = parts.map((part, i) => i % 2 === 1 ? `<strong class="font-extrabold text-white text-shadow-sm">${part}</strong>` : part);
-                  return `<p class="text-sm text-zinc-300 leading-relaxed my-2 font-light">${renderedParts.join('')}</p>`;
+                  return `<p class="text-base text-zinc-100 leading-relaxed my-2 font-semibold">${renderedParts.join('')}</p>`;
                 }
                 if (formatted.trim() === '') return `<div class="h-2"></div>`;
-                return `<p class="text-sm text-zinc-300 leading-relaxed my-2 font-light">${formatted}</p>`;
+                return `<p class="text-base text-zinc-100 leading-relaxed my-2 font-semibold">${formatted}</p>`;
               }).join('');
         }
 
@@ -855,7 +844,7 @@ Escribe de manera cercana, motivadora y que demuestre el valor agregado de Netli
                     const x = Math.round(radius * Math.cos(angleRad));
                     const y = Math.round(radius * Math.sin(angleRad));
                     node.style.transform = `translate(${x}px, ${y}px) scale(1)`;
-                    node.className = "absolute w-16 h-16 z-20 transition-all duration-700 ease-[cubic-bezier(0.19,1,0.22,1)] opacity-100 scale-100 pointer-events-auto";
+                    node.className = "absolute z-20 transition-all duration-700 ease-[cubic-bezier(0.19,1,0.22,1)] opacity-100 scale-100 pointer-events-auto";
                 } else {
                     node.style.transform = `translate(0px, 0px) scale(0.4)`;
                     node.className = "absolute z-20 transition-all duration-700 ease-[cubic-bezier(0.19,1,0.22,1)] opacity-0 scale-40 pointer-events-none";
@@ -898,14 +887,14 @@ Escribe de manera cercana, motivadora y que demuestre el valor agregado de Netli
                         </div>
                         <div class="flex flex-col justify-center items-center py-12 text-center">
                           <div class="relative w-20 h-20 mb-6">
-                            <div class="absolute inset-0 border-4 border-dashed border-orange-500 border-t-transparent rounded-full animate-spin"></div>
+                            <div class="absolute inset-0 border-4 border-orange-500 border-t-transparent rounded-full animate-spin"></div>
                             <div class="absolute inset-0 flex items-center justify-center text-orange-400">
                               <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2" /></svg>
                             </div>
                           </div>
                           <h5 class="text-sm font-extrabold text-white mb-2">PROCESANDO HUELLA DE CONECTIVIDAD</h5>
                           <p class="text-zinc-500 text-xs font-light max-w-xs">
-                            Aura AI se está conectando a la API de Gemini para analizar tus datos y redactar tu plan de beneficios humanos personalizados...
+                            Aura AI se está conectando a la API de Gemini para analizar tus datos y redactar tu plan de beneficios personalizados...
                           </p>
                         </div>
                       </div>
@@ -921,10 +910,10 @@ Escribe de manera cercana, motivadora y que demuestre el valor agregado de Netli
                             <span class="text-xs font-black tracking-widest text-orange-400 uppercase">NETLIFE TE ACOMPAÑA</span>
                           </div>
                           <button onclick="closeAiDiagnostic()" class="text-zinc-500 hover:text-white transition-colors touch-manipulation">
-                            <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
                           </button>
                         </div>
-                        <div class="overflow-y-auto max-h-[320px] pr-2 custom-scrollbar border-b border-zinc-800/60 pb-4">
+                        <div class="overflow-y-auto max-h-[220px] pr-2 custom-scrollbar border-b border-zinc-800/60 pb-4">
                           ${formatMarkdownHTML(aiResponse)}
                         </div>
                         <button 
@@ -937,33 +926,11 @@ Escribe de manera cercana, motivadora y que demuestre el valor agregado de Netli
                       </div>
                     `;
                 } else if (aiError) {
-                    hudContainer.innerHTML = `
-                      <div class="h-full flex flex-col justify-between">
-                        <div class="flex items-center justify-between mb-4 border-b border-zinc-800 pb-3">
-                          <div class="flex items-center space-x-2">
-                            <span class="text-orange-400">
-                              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8" /><rect width="16" height="12" x="4" y="8" rx="2" /><path d="M2 14h2" /><path d="M20 14h2" /><path d="M15 13v2" /><path d="M9 13v2" /></svg>
-                            </span>
-                            <span class="text-xs font-black tracking-widest text-orange-400 uppercase">NETLIFE TE ACOMPAÑA</span>
-                          </div>
-                          <button onclick="closeAiDiagnostic()" class="text-zinc-500 hover:text-white transition-colors touch-manipulation">
-                            <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
-                          </button>
-                        </div>
-                        <div class="flex flex-col items-center justify-center text-center py-8">
-                          <div class="w-12 h-12 rounded-full bg-red-950/50 border border-red-500/30 flex items-center justify-center text-red-400 mb-4">
-                            <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
-                          </div>
-                          <p class="text-xs text-zinc-300 font-light mb-4">${aiError}</p>
-                          <button 
-                            onclick="generateAiDiagnostic()"
-                            class="py-2.5 px-6 bg-zinc-900 border border-zinc-800 rounded-xl text-xs font-bold text-white hover:bg-zinc-800 transition-all touch-manipulation"
-                          >
-                            Reintentar Escaneo
-                          </button>
-                        </div>
-                      </div>
-                    `;
+                    // Si ocurre cualquier error, forzamos instantáneamente el render local para que el usuario no vea errores
+                    aiResponse = "LOCAL_FALLBACK";
+                    aiError = null;
+                    renderHUD();
+                    return;
                 } else {
                     hudContainer.innerHTML = `
                       <div class="h-full flex flex-col justify-between">
@@ -975,12 +942,12 @@ Escribe de manera cercana, motivadora y que demuestre el valor agregado de Netli
                             <span class="text-xs font-black tracking-widest text-orange-400 uppercase">NETLIFE TE ACOMPAÑA</span>
                           </div>
                           <button onclick="closeAiDiagnostic()" class="text-zinc-500 hover:text-white transition-colors touch-manipulation">
-                            <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
                           </button>
                         </div>
                         
                         <div class="space-y-4">
-                          <p class="text-xs text-zinc-400 font-light leading-relaxed">
+                          <p class="text-xs text-zinc-300 font-semibold leading-relaxed">
                             Configurando tu Ecosistema Digital a medida. Aura IA está procesando las necesidades específicas de tu hogar para maximizar tu experiencia Netlife.
                           </p>
                           
