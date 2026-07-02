@@ -294,6 +294,7 @@
             desc: 'Wifi Gi, Extender y Cableado Ethernet. Cobertura inquebrantable en cada rincón de tu hogar, sin zonas muertas.',
             links: [
               { label: 'Ver especificaciones Wifi Gi', url: 'https://netlife.ec/wifi-gi/' },
+              { label: 'Ver Wifi y Extender Premium', url: 'https://netlife.ec/wifi-y-extender-dual-band-premium/' },
               { label: 'Ver Cableado Ethernet', url: 'https://netlife.ec/cableadoethernet/' }
             ]
           },
@@ -322,7 +323,7 @@
             color: 'text-green-400', 
             angle: 135, // Bottom-Left
             desc: 'Mini UPS inteligente. Porque tu vida no puede detenerse por un apagón. Mantente conectado siempre.',
-            links: [{ label: 'Ver Wifi y Extender Premium', url: 'https://netlife.ec/wifi-y-extender-dual-band-premium/' }]
+            links: [{ label: 'Ver Mini-UPS Inteligente', url: 'https://netlife.ec/landing-mini-ups/' }]
           },
           { 
             id: 'productividad', 
@@ -342,7 +343,7 @@
             icon: SVG_TV, 
             color: 'text-pink-400', 
             angle: 225, // Top-Left
-            desc: 'Paramount+, Zapping, ECDF. Tus momentos de relax garantizados con el mejor contenido de cine, series and deportes.',
+            desc: 'Paramount+, Zapping, ECDF. Tus momentos de relax garantizados con el mejor contenido de cine, series y deportes.',
             links: [{ label: 'Ver canales de Entretenimiento', url: 'https://netlife.ec/entretenimiento/' }]
           },
         ];
@@ -642,7 +643,7 @@
                     benefit: "Enrutamientos directos optimizados a los principales servidores de eSports en la nube sin cortes."
                 });
                 configItems.push({
-                    title: "Wifi Gi + Cableado Ethernet",
+                    title: "Wifi y Extender Premium + Cableado Ethernet",
                     benefit: "Conectores dedicados de alto espectro para estabilizar la señal, cruzando muros e interferencia inalámbrica."
                 });
                 configItems.push({
@@ -804,18 +805,18 @@ Escribe de manera cercana, motivadora y que demuestre el valor agregado de Netli
               .map(line => {
                 let formatted = line;
                 if (formatted.startsWith('# ')) {
-                  return `<h3 class="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-yellow-400 mt-4 mb-2 tracking-wide uppercase">${formatted.replace('# ', '')}</h3>`;
+                  return `<h3 class="text-xl font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-yellow-400 mt-4 mb-2 tracking-wide uppercase">${formatted.replace('# ', '')}</h3>`;
                 }
                 if (formatted.startsWith('### ')) {
-                  return `<h4 class="text-sm sm:text-base font-bold text-orange-400 mt-4 mb-2 uppercase tracking-widest">${formatted.replace('### ', '')}</h4>`;
+                  return `<h4 class="text-sm font-bold text-orange-400 mt-4 mb-2 uppercase tracking-widest">${formatted.replace('### ', '')}</h4>`;
                 }
                 if (formatted.includes('**')) {
                   const parts = formatted.split('**');
                   const renderedParts = parts.map((part, i) => i % 2 === 1 ? `<strong class="font-extrabold text-white text-shadow-sm">${part}</strong>` : part);
-                  return `<p class="text-base text-zinc-100 leading-relaxed my-2 font-semibold">${renderedParts.join('')}</p>`;
+                  return `<p class="text-sm text-zinc-300 leading-relaxed my-2 font-light">${renderedParts.join('')}</p>`;
                 }
                 if (formatted.trim() === '') return `<div class="h-2"></div>`;
-                return `<p class="text-base text-zinc-100 leading-relaxed my-2 font-semibold">${formatted}</p>`;
+                return `<p class="text-sm text-zinc-300 leading-relaxed my-2 font-light">${formatted}</p>`;
               }).join('');
         }
 
@@ -879,7 +880,7 @@ Escribe de manera cercana, motivadora y que demuestre el valor agregado de Netli
                             <span class="text-orange-400">
                               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8" /><rect width="16" height="12" x="4" y="8" rx="2" /><path d="M2 14h2" /><path d="M20 14h2" /><path d="M15 13v2" /><path d="M9 13v2" /></svg>
                             </span>
-                            <span class="text-xs font-black tracking-widest text-orange-400 uppercase">NETLIFE TE ACOMPAÑA</span>
+                            <span class="text-xs font-black tracking-widest text-orange-400 uppercase font-bold">NETLIFE TE ACOMPAÑA</span>
                           </div>
                           <button onclick="closeAiDiagnostic()" class="text-zinc-500 hover:text-white transition-colors touch-manipulation">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
@@ -907,7 +908,7 @@ Escribe de manera cercana, motivadora y que demuestre el valor agregado de Netli
                             <span class="text-orange-400">
                               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8" /><rect width="16" height="12" x="4" y="8" rx="2" /><path d="M2 14h2" /><path d="M20 14h2" /><path d="M15 13v2" /><path d="M9 13v2" /></svg>
                             </span>
-                            <span class="text-xs font-black tracking-widest text-orange-400 uppercase">NETLIFE TE ACOMPAÑA</span>
+                            <span class="text-xs font-black tracking-widest text-orange-400 uppercase font-bold">NETLIFE TE ACOMPAÑA</span>
                           </div>
                           <button onclick="closeAiDiagnostic()" class="text-zinc-500 hover:text-white transition-colors touch-manipulation">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
@@ -939,7 +940,7 @@ Escribe de manera cercana, motivadora y que demuestre el valor agregado de Netli
                             <span class="text-orange-400">
                               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8" /><rect width="16" height="12" x="4" y="8" rx="2" /><path d="M2 14h2" /><path d="M20 14h2" /><path d="M15 13v2" /><path d="M9 13v2" /></svg>
                             </span>
-                            <span class="text-xs font-black tracking-widest text-orange-400 uppercase">NETLIFE TE ACOMPAÑA</span>
+                            <span class="text-xs font-black tracking-widest text-orange-400 uppercase font-bold">NETLIFE TE ACOMPAÑA</span>
                           </div>
                           <button onclick="closeAiDiagnostic()" class="text-zinc-500 hover:text-white transition-colors touch-manipulation">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
