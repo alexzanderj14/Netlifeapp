@@ -23,6 +23,28 @@
             overflow-x: hidden;
         }
 
+        /* Efecto de resorte elástico premium para interacciones táctiles y hover */
+        .spring-transition {
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease, border-color 0.3s ease, background-color 0.3s ease;
+        }
+        .spring-transition:hover {
+            transform: scale(1.15) !important;
+        }
+        .spring-transition:active {
+            transform: scale(0.90) !important;
+        }
+
+        /* Efecto de resorte para el icono interno de los botones grupales */
+        .icon-spring {
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .group:hover .icon-spring {
+            transform: scale(1.18);
+        }
+        .group:active .icon-spring {
+            transform: scale(0.88);
+        }
+
         /* Fondo de red de energía tecnológica de Netlife */
         .tech-bg {
             background-image: 
@@ -205,7 +227,7 @@
         <!-- COLUMNA DERECHA: Consola de Control Lateral HUD / Asistente AI -->
         <div class="lg:col-span-4 flex flex-col justify-center min-h-[400px] w-full max-w-md mx-auto lg:max-w-none">
             <div 
-              class="bg-gradient-to-b from-zinc-900/50 to-zinc-950/95 backdrop-blur-xl border border-zinc-800/60 p-5 sm:p-6 rounded-3xl shadow-[0_25px_60px_rgba(0,0,0,0.6)] transition-all duration-500 flex flex-col justify-center relative overflow-hidden group min-h-[360px]"
+              class="bg-zinc-100 border border-zinc-300 p-5 sm:p-6 rounded-3xl shadow-[0_25px_60px_rgba(0,0,0,0.6)] transition-all duration-500 flex flex-col justify-center relative overflow-hidden group min-h-[360px]"
               onclick="event.stopPropagation()"
             >
                 <div class="absolute top-0 right-0 w-16 h-16 border-t-2 border-r-2 border-orange-500/15 rounded-tr-3xl pointer-events-none transition-colors group-hover:border-orange-500/30"></div>
@@ -220,7 +242,7 @@
     <!-- Leyenda Instructiva HUD original y limpia -->
     <div class="w-full text-center px-4 pointer-events-none z-20 mt-auto pb-4">
         <p class="text-zinc-100 text-xs sm:text-sm tracking-wide font-semibold max-w-3xl mx-auto leading-relaxed drop-shadow-md">
-            Haz <span class="text-orange-500 font-extrabold">CLIC</span> en la casilla para descubrir que Netlife es más de lo que conoces - <span class="text-orange-500 font-extrabold">CLIC</span> en el centro del HUB para saber que servicios ya son parte de tu hogar.
+            <span class="text-orange-500 font-extrabold">CLIC</span> en centro del HUB para saber que servicios son parte de tu hogar.
         </p>
     </div>
 
@@ -274,7 +296,7 @@
             color: 'text-purple-400', 
             angle: 270, // Top
             desc: 'Planes Gamer con rutas optimizadas y menor latencia para jugar al máximo nivel. Que el lag no sea tu enemigo.',
-            links: [{ label: 'Ver plan Gamer Netlife', url: 'https://netlife.ec/plan-gamer-netlife/' }]
+            links: [{ label: 'Plan Gamer', url: 'https://netlife.ec/plan-gamer-netlife/', img: 'https://raw.githubusercontent.com/alexzanderj14/Netlifeapp/main/gammer.png' }]
           },
           { 
             id: 'ciberseguridad', 
@@ -283,7 +305,11 @@
             color: 'text-blue-400', 
             angle: 315, // Top-Right (Proyecta hacia afuera-derecha)
             desc: 'Netlife Defense, Safe Kids y Password Manager. Blindaje total 24/7 para proteger a los que más amas y tu identidad digital.',
-            links: [{ label: 'Ver Seguridad Total Defense', url: 'https://netlife.ec/seguridad-total-defense/' }]
+            links: [
+              { label: 'Defense', url: 'https://netlife.ec/seguridad-total-defense/', img: 'https://raw.githubusercontent.com/alexzanderj14/Netlifeapp/main/defense.png' },
+              { label: 'Password', url: 'https://netlife.ec/seguridad-total-defense/', img: 'https://raw.githubusercontent.com/alexzanderj14/Netlifeapp/main/pasword.png' },
+              { label: 'Safe Kids', url: 'https://netlife.ec/seguridad-total-defense/', img: 'https://raw.githubusercontent.com/alexzanderj14/Netlifeapp/main/safekids.png' }
+            ]
           },
           { 
             id: 'full_coverage', 
@@ -293,9 +319,9 @@
             angle: 0, // Right (Proyecta hacia afuera-derecha)
             desc: 'Wifi Gi, Extender y Cableado Ethernet. Cobertura inquebrantable en cada rincón de tu hogar, sin zonas muertas.',
             links: [
-              { label: 'Ver especificaciones Wifi Gi', url: 'https://netlife.ec/wifi-gi/' },
-              { label: 'Ver Wifi y Extender Premium', url: 'https://netlife.ec/wifi-y-extender-dual-band-premium/' },
-              { label: 'Ver Cableado Ethernet', url: 'https://netlife.ec/cableadoethernet/' }
+              { label: 'Wifi Gi', url: 'https://netlife.ec/wifi-gi/', img: 'https://raw.githubusercontent.com/alexzanderj14/Netlifeapp/main/wifigi.png' },
+              { label: 'Extender', url: 'https://netlife.ec/wifi-y-extender-dual-band-premium/', img: 'https://raw.githubusercontent.com/alexzanderj14/Netlifeapp/main/extensor.png' },
+              { label: 'Cableado', url: 'https://netlife.ec/cableadoethernet/', img: 'https://raw.githubusercontent.com/alexzanderj14/Netlifeapp/main/cableado.png' }
             ]
           },
           { 
@@ -305,7 +331,10 @@
             color: 'text-emerald-400', 
             angle: 45, // Bottom-Right (Proyecta hacia afuera-derecha)
             desc: 'NetlifeCam Indoor y Outdoor. Tu hogar en la palma de tu mano. Control, automatización y vigilancia inteligente.',
-            links: [{ label: 'Ver Netlife Cam', url: 'https://netlife.ec/netlife-cam/' }]
+            links: [
+              { label: 'Cam Indoor', url: 'https://netlife.ec/netlife-cam/', img: 'https://raw.githubusercontent.com/alexzanderj14/Netlifeapp/main/camin.png' },
+              { label: 'Cam Outdoor', url: 'https://netlife.ec/netlife-cam/', img: 'https://raw.githubusercontent.com/alexzanderj14/Netlifeapp/main/camout.png' }
+            ]
           },
           { 
             id: 'asistencia', 
@@ -314,7 +343,11 @@
             color: 'text-amber-400', 
             angle: 90, // Bottom
             desc: 'Soporte Pro y Premium. No te dejamos solo; nuestros expertos están listos para resolver cualquier desafío técnico.',
-            links: [{ label: 'Ver Asistencia Remota', url: 'https://netlife.ec/asistencia-remota/' }]
+            links: [
+              { label: 'Remota', url: 'https://netlife.ec/asistencia-remota/', img: 'https://raw.githubusercontent.com/alexzanderj14/Netlifeapp/main/Asistencia.png' },
+              { label: 'Soporte Pro', url: 'https://netlife.ec/asistencia-remota/', img: 'https://raw.githubusercontent.com/alexzanderj14/Netlifeapp/main/Asistenciapro.png' },
+              { label: 'Access', url: 'https://netlifeaccess.netlife.net.ec/', img: 'https://raw.githubusercontent.com/alexzanderj14/Netlifeapp/main/access.png' }
+            ]
           },
           { 
             id: 'equipamiento', 
@@ -323,7 +356,7 @@
             color: 'text-green-400', 
             angle: 135, // Bottom-Left
             desc: 'Mini UPS inteligente. Porque tu vida no puede detenerse por un apagón. Mantente conectado siempre.',
-            links: [{ label: 'Ver Mini-UPS Inteligente', url: 'https://netlife.ec/landing-mini-ups/' }]
+            links: [{ label: 'Mini-UPS Inteligente', url: 'https://netlife.ec/landing-mini-ups/' }]
           },
           { 
             id: 'productividad', 
@@ -333,8 +366,9 @@
             angle: 180, // Left
             desc: 'Netlife Cloud, IP Fija y Constructor Web. Herramientas de grado empresarial para potenciar tu negocio o teletrabajo.',
             links: [
-              { label: 'Ver Netlife Cloud', url: 'https://netlife.ec/netlife-cloud/' },
-              { label: 'Ver Constructor de Sitios Web', url: 'https://netlife.ec/constructor-sitios-web-rapido/' }
+              { label: 'Cloud', url: 'https://netlife.ec/netlife-cloud/', img: 'https://raw.githubusercontent.com/alexzanderj14/Netlifeapp/main/Could.png' },
+              { label: 'Constructor', url: 'https://netlife.ec/constructor-sitios-web-rapido/', img: 'https://raw.githubusercontent.com/alexzanderj14/Netlifeapp/main/constructor.png' },
+              { label: 'Microsoft 365', url: 'https://netlife.ec/netlife-cloud/', img: 'https://raw.githubusercontent.com/alexzanderj14/Netlifeapp/main/Microsoft365.png' }
             ]
           },
           { 
@@ -344,7 +378,12 @@
             color: 'text-pink-400', 
             angle: 225, // Top-Left
             desc: 'Paramount+, Zapping, ECDF. Tus momentos de relax garantizados con el mejor contenido de cine, series y deportes.',
-            links: [{ label: 'Ver canales de Entretenimiento', url: 'https://netlife.ec/entretenimiento/' }]
+            links: [
+              { label: 'Netlife Play', url: 'https://netlife.ec/entretenimiento/', img: 'https://raw.githubusercontent.com/alexzanderj14/Netlifeapp/main/play.png' },
+              { label: 'Paramount+', url: 'https://netlife.ec/entretenimiento/', img: 'https://raw.githubusercontent.com/alexzanderj14/Netlifeapp/main/paramount.png' },
+              { label: 'Zapping', url: 'https://netlife.ec/entretenimiento/', img: 'https://raw.githubusercontent.com/alexzanderj14/Netlifeapp/main/zaping.png' },
+              { label: 'Canal del Fútbol', url: 'https://netlife.ec/entretenimiento/', img: 'https://raw.githubusercontent.com/alexzanderj14/Netlifeapp/main/ecdf.png' }
+            ]
           },
         ];
 
@@ -447,23 +486,23 @@
                       onclick="selectServiceById('${service.id}', event)"
                       onmouseenter="hoverServiceId('${service.id}')"
                       onmouseleave="hoverServiceId(null)"
-                      class="orbit-btn w-16 h-16 rounded-full bg-zinc-950/95 backdrop-blur-md border border-zinc-800/80 hover:border-zinc-400 hover:bg-zinc-900 flex flex-col items-center justify-center transition-all duration-300 group relative touch-manipulation"
+                      class="orbit-btn spring-transition w-16 h-16 rounded-full bg-zinc-950/95 backdrop-blur-md border border-zinc-800/80 hover:border-zinc-400 hover:bg-zinc-900 flex flex-col items-center justify-center group relative touch-manipulation"
                     >
                       <div class="icon-frame ${service.color} transition-transform duration-300 drop-shadow-[0_0_10px_currentColor]">
                         ${service.icon}
                       </div>
                       
-                      <div class="label absolute -bottom-7 text-xs sm:text-sm font-bold tracking-wider text-zinc-200 group-hover:text-white transition-colors duration-300 whitespace-nowrap">
+                      <div class="label absolute -bottom-7 text-xs sm:text-sm font-bold tracking-wider text-zinc-100 group-hover:text-white transition-colors duration-300 whitespace-nowrap">
                         ${service.name}
                       </div>
                     </button>
 
-                    <!-- Spatial Tooltip: Oculto en móviles y visible en desktop con proyección radial exterior garantizada -->
+                    <!-- Spatial Tooltip: Recuadro blanco transparente optimizado con desenfoque de fondo y borde claro para máxima legibilidad -->
                     <div 
                       id="tooltip-${service.id}"
-                      class="tooltip hidden md:block absolute w-56 p-4 bg-zinc-900/95 backdrop-blur-xl border border-zinc-700 rounded-2xl shadow-[0_15px_30px_rgba(0,0,0,0.8)] z-[100] transition-all duration-300 opacity-0 scale-75 pointer-events-none ${tooltipPos}"
+                      class="tooltip hidden md:block absolute w-56 p-4 bg-white/90 backdrop-blur-md border border-zinc-300 rounded-2xl shadow-[0_15px_30px_rgba(0,0,0,0.8)] z-[100] transition-all duration-300 opacity-0 scale-75 pointer-events-none ${tooltipPos}"
                     >
-                      <p class="text-sm text-zinc-100 leading-relaxed font-semibold">${service.desc}</p>
+                      <p class="text-xs text-zinc-950 leading-relaxed font-bold">${service.desc}</p>
                     </div>
                   </div>
                 `;
@@ -683,18 +722,18 @@
             closing = `¿La ecuación de rentabilidad de tu tranquilidad? Si decides irte por una opción más económica en el mercado y contratar antivirus independientes, repetidores Wi-Fi genéricos y pagar el streaming por separado, gastarás el doble de dinero y diez veces más disgustos técnicos. Todo funciona mejor en una sola cuenta de Netlife.`;
 
             return `
-              <h3 class="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-yellow-400 mt-4 mb-2 tracking-wide uppercase">🛡️ DIAGNÓSTICO DE ECOSISTEMA AURA</h3>
-              <p class="text-base text-zinc-100 leading-relaxed my-2 font-semibold">${greeting}</p>
+              <h3 class="text-lg font-black text-orange-600 mt-4 mb-2 tracking-wide uppercase">🛡️ DIAGNÓSTICO DE ECOSISTEMA AURA</h3>
+              <p class="text-sm text-zinc-800 leading-relaxed my-2 font-bold">${greeting}</p>
               
-              <h4 class="text-sm sm:text-base font-bold text-orange-400 mt-4 mb-2 uppercase tracking-widest">💡 TU CONFIGURACIÓN DE VIDA INTELIGENTE</h4>
+              <h4 class="text-xs font-bold text-orange-600 mt-4 mb-2 uppercase tracking-widest">💡 TU CONFIGURACIÓN DE VIDA INTELIGENTE</h4>
               ${configItems.map(item => `
-                <p class="text-base text-zinc-100 leading-relaxed my-2 font-semibold">
-                  <strong class="font-extrabold text-white text-shadow-sm">- ${item.title}</strong>: ${item.benefit}
+                <p class="text-sm text-zinc-800 leading-relaxed my-2 font-bold">
+                  <strong class="font-extrabold text-black text-shadow-sm">- ${item.title}</strong>: ${item.benefit}
                 </p>
               `).join('')}
               
-              <h4 class="text-sm sm:text-base font-bold text-orange-400 mt-4 mb-2 uppercase tracking-widest">💰 RETORNO DE INVERSIÓN (ROI) DE PAZ MENTAL</h4>
-              <p class="text-base text-zinc-100 leading-relaxed my-2 font-semibold">${closing}</p>
+              <h4 class="text-xs font-bold text-orange-600 mt-4 mb-2 uppercase tracking-widest">💰 RETORNO DE INVERSIÓN (ROI) DE PAZ MENTAL</h4>
+              <p class="text-sm text-zinc-800 leading-relaxed my-2 font-bold">${closing}</p>
             `;
         }
 
@@ -805,18 +844,18 @@ Escribe de manera cercana, motivadora y que demuestre el valor agregado de Netli
               .map(line => {
                 let formatted = line;
                 if (formatted.startsWith('# ')) {
-                  return `<h3 class="text-xl font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-yellow-400 mt-4 mb-2 tracking-wide uppercase">${formatted.replace('# ', '')}</h3>`;
+                  return `<h3 class="text-lg font-black text-orange-600 mt-4 mb-2 tracking-wide uppercase">${formatted.replace('# ', '')}</h3>`;
                 }
                 if (formatted.startsWith('### ')) {
-                  return `<h4 class="text-sm font-bold text-orange-400 mt-4 mb-2 uppercase tracking-widest">${formatted.replace('### ', '')}</h4>`;
+                  return `<h4 class="text-xs font-bold text-orange-600 mt-4 mb-2 uppercase tracking-widest">${formatted.replace('### ', '')}</h4>`;
                 }
                 if (formatted.includes('**')) {
                   const parts = formatted.split('**');
-                  const renderedParts = parts.map((part, i) => i % 2 === 1 ? `<strong class="font-extrabold text-white text-shadow-sm">${part}</strong>` : part);
-                  return `<p class="text-sm text-zinc-300 leading-relaxed my-2 font-light">${renderedParts.join('')}</p>`;
+                  const renderedParts = parts.map((part, i) => i % 2 === 1 ? `<strong class="font-extrabold text-black text-shadow-sm">${part}</strong>` : part);
+                  return `<p class="text-sm text-zinc-800 leading-relaxed my-2 font-bold">${renderedParts.join('')}</p>`;
                 }
                 if (formatted.trim() === '') return `<div class="h-2"></div>`;
-                return `<p class="text-sm text-zinc-300 leading-relaxed my-2 font-light">${formatted}</p>`;
+                return `<p class="text-sm text-zinc-800 leading-relaxed my-2 font-bold">${formatted}</p>`;
               }).join('');
         }
 
@@ -875,26 +914,26 @@ Escribe de manera cercana, motivadora y que demuestre el valor agregado de Netli
                 if (aiLoading) {
                     hudContainer.innerHTML = `
                       <div class="h-full flex flex-col justify-between animate-pulse">
-                        <div class="flex items-center justify-between mb-4 border-b border-zinc-800 pb-3">
+                        <div class="flex items-center justify-between mb-4 border-b border-zinc-300 pb-3">
                           <div class="flex items-center space-x-2">
-                            <span class="text-orange-400">
+                            <span class="text-orange-600">
                               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8" /><rect width="16" height="12" x="4" y="8" rx="2" /><path d="M2 14h2" /><path d="M20 14h2" /><path d="M15 13v2" /><path d="M9 13v2" /></svg>
                             </span>
-                            <span class="text-xs font-black tracking-widest text-orange-400 uppercase font-bold">NETLIFE TE ACOMPAÑA</span>
+                            <span class="text-xs font-black tracking-widest text-orange-600 uppercase font-bold">NETLIFE TE ACOMPAÑA</span>
                           </div>
-                          <button onclick="closeAiDiagnostic()" class="text-zinc-500 hover:text-white transition-colors touch-manipulation">
+                          <button onclick="closeAiDiagnostic()" class="text-zinc-500 hover:text-black transition-colors touch-manipulation">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
                           </button>
                         </div>
                         <div class="flex flex-col justify-center items-center py-12 text-center">
                           <div class="relative w-20 h-20 mb-6">
                             <div class="absolute inset-0 border-4 border-orange-500 border-t-transparent rounded-full animate-spin"></div>
-                            <div class="absolute inset-0 flex items-center justify-center text-orange-400">
+                            <div class="absolute inset-0 flex items-center justify-center text-orange-600">
                               <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2" /></svg>
                             </div>
                           </div>
-                          <h5 class="text-sm font-extrabold text-white mb-2">PROCESANDO HUELLA DE CONECTIVIDAD</h5>
-                          <p class="text-zinc-500 text-xs font-light max-w-xs">
+                          <h5 class="text-sm font-extrabold text-zinc-900 mb-2">PROCESANDO HUELLA DE CONECTIVIDAD</h5>
+                          <p class="text-zinc-600 text-xs font-semibold max-w-xs leading-relaxed">
                             Aura AI se está conectando a la API de Gemini para analizar tus datos y redactar tu plan de beneficios personalizados...
                           </p>
                         </div>
@@ -903,23 +942,23 @@ Escribe de manera cercana, motivadora y que demuestre el valor agregado de Netli
                 } else if (aiResponse) {
                     hudContainer.innerHTML = `
                       <div class="h-full flex flex-col justify-between">
-                        <div class="flex items-center justify-between mb-4 border-b border-zinc-800 pb-3">
+                        <div class="flex items-center justify-between mb-4 border-b border-zinc-300 pb-3">
                           <div class="flex items-center space-x-2">
-                            <span class="text-orange-400">
+                            <span class="text-orange-600">
                               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8" /><rect width="16" height="12" x="4" y="8" rx="2" /><path d="M2 14h2" /><path d="M20 14h2" /><path d="M15 13v2" /><path d="M9 13v2" /></svg>
                             </span>
-                            <span class="text-xs font-black tracking-widest text-orange-400 uppercase font-bold">NETLIFE TE ACOMPAÑA</span>
+                            <span class="text-xs font-black tracking-widest text-orange-600 uppercase font-bold">NETLIFE TE ACOMPAÑA</span>
                           </div>
-                          <button onclick="closeAiDiagnostic()" class="text-zinc-500 hover:text-white transition-colors touch-manipulation">
+                          <button onclick="closeAiDiagnostic()" class="text-zinc-500 hover:text-black transition-colors touch-manipulation">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
                           </button>
                         </div>
-                        <div class="overflow-y-auto max-h-[220px] pr-2 custom-scrollbar border-b border-zinc-800/60 pb-4">
+                        <div class="overflow-y-auto max-h-[220px] pr-2 custom-scrollbar border-b border-zinc-300 pb-4">
                           ${formatMarkdownHTML(aiResponse)}
                         </div>
                         <button 
                           onclick="resetAiDiagnostic()"
-                          class="w-full mt-4 py-3 bg-zinc-900 border border-zinc-800 text-zinc-300 font-extrabold text-xs uppercase tracking-wider rounded-xl hover:bg-zinc-800 transition-colors flex items-center justify-center space-x-2 touch-manipulation"
+                          class="w-full mt-4 py-3 bg-zinc-200 border border-zinc-300 text-zinc-800 font-extrabold text-xs uppercase tracking-wider rounded-xl hover:bg-zinc-300 transition-colors flex items-center justify-center space-x-2 touch-manipulation"
                         >
                           <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" /><path d="M16 3h5v5" /><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" /><path d="M8 21H3v-5" /></svg>
                           <span>Hacer Nuevo Diagnóstico</span>
@@ -934,32 +973,32 @@ Escribe de manera cercana, motivadora y que demuestre el valor agregado de Netli
                     return;
                 } else {
                     hudContainer.innerHTML = `
-                      <div class="h-full flex flex-col justify-between">
-                        <div class="flex items-center justify-between mb-4 border-b border-zinc-800 pb-3">
+                      <div class="h-full flex flex-col justify-between animate-in fade-in duration-300">
+                        <div class="flex items-center justify-between mb-4 border-b border-zinc-300 pb-3">
                           <div class="flex items-center space-x-2">
-                            <span class="text-orange-400">
+                            <span class="text-orange-600">
                               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8" /><rect width="16" height="12" x="4" y="8" rx="2" /><path d="M2 14h2" /><path d="M20 14h2" /><path d="M15 13v2" /><path d="M9 13v2" /></svg>
                             </span>
-                            <span class="text-xs font-black tracking-widest text-orange-400 uppercase font-bold">NETLIFE TE ACOMPAÑA</span>
+                            <span class="text-xs font-black tracking-widest text-orange-600 uppercase font-bold">NETLIFE TE ACOMPAÑA</span>
                           </div>
-                          <button onclick="closeAiDiagnostic()" class="text-zinc-500 hover:text-white transition-colors touch-manipulation">
+                          <button onclick="closeAiDiagnostic()" class="text-zinc-500 hover:text-black transition-colors touch-manipulation">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
                           </button>
                         </div>
                         
                         <div class="space-y-4">
-                          <p class="text-xs text-zinc-300 font-semibold leading-relaxed">
+                          <p class="text-xs text-zinc-700 font-bold leading-relaxed">
                             Configurando tu Ecosistema Digital a medida. Aura IA está procesando las necesidades específicas de tu hogar para maximizar tu experiencia Netlife.
                           </p>
                           
                           <!-- Pregunta 1 -->
                           <div class="space-y-1">
-                            <label class="text-[10px] font-bold tracking-wider text-zinc-500 uppercase">Personas en tu Hogar</label>
+                            <label class="text-[10px] font-black tracking-wider text-zinc-500 uppercase">Personas en tu Hogar</label>
                             <div class="grid grid-cols-3 gap-2">
                               ${['1-2', '3-4', '5+'].map(opt => `
                                 <button
                                   onclick="setAiAnswer('householdSize', '${opt}')"
-                                  class="py-2 rounded-xl text-xs font-bold transition-all border touch-manipulation ${aiAnswers.householdSize === opt ? 'bg-orange-500/10 border-orange-500 text-orange-400' : 'bg-zinc-950/80 border-zinc-800 text-zinc-400 hover:border-zinc-700'}"
+                                  class="py-2 rounded-xl text-xs font-black transition-all border touch-manipulation ${aiAnswers.householdSize === opt ? 'bg-orange-500/10 border-orange-500 text-orange-600' : 'bg-white border-zinc-300 text-zinc-600 hover:border-zinc-400'}"
                                 >
                                   ${opt}
                                 </button>
@@ -969,7 +1008,7 @@ Escribe de manera cercana, motivadora y que demuestre el valor agregado de Netli
 
                           <!-- Pregunta 2 -->
                           <div class="space-y-1">
-                            <label class="text-[10px] font-bold tracking-wider text-zinc-500 uppercase">¿Teletrabajo o Estudio en Línea?</label>
+                            <label class="text-[10px] font-black tracking-wider text-zinc-500 uppercase">¿Teletrabajo o Estudio en Línea?</label>
                             <div class="grid grid-cols-3 gap-2">
                               ${[
                                 { key: 'none', lbl: 'No' },
@@ -978,7 +1017,7 @@ Escribe de manera cercana, motivadora y que demuestre el valor agregado de Netli
                               ].map(opt => `
                                 <button
                                   onclick="setAiAnswer('remoteActivity', '${opt.key}')"
-                                  class="py-2 rounded-xl text-xs font-bold transition-all border touch-manipulation ${aiAnswers.remoteActivity === opt.key ? 'bg-orange-500/10 border-orange-500 text-orange-400' : 'bg-zinc-950/80 border-zinc-800 text-zinc-400 hover:border-zinc-700'}"
+                                  class="py-2 rounded-xl text-xs font-black transition-all border touch-manipulation ${aiAnswers.remoteActivity === opt.key ? 'bg-orange-500/10 border-orange-500 text-orange-600' : 'bg-white border-zinc-300 text-zinc-600 hover:border-zinc-400'}"
                                 >
                                   ${opt.lbl}
                                 </button>
@@ -988,7 +1027,7 @@ Escribe de manera cercana, motivadora y que demuestre el valor agregado de Netli
 
                           <!-- Pregunta 3 -->
                           <div class="space-y-1">
-                            <label class="text-[10px] font-bold tracking-wider text-zinc-500 uppercase">¿Amantes de los videojuegos (Gamers)?</label>
+                            <label class="text-[10px] font-black tracking-wider text-zinc-500 uppercase">¿Amantes de los videojuegos (Gamers)?</label>
                             <div class="grid grid-cols-2 gap-2">
                               ${[
                                 { key: 'yes', lbl: 'Sí (Competitivo)' },
@@ -996,7 +1035,7 @@ Escribe de manera cercana, motivadora y que demuestre el valor agregado de Netli
                               ].map(opt => `
                                 <button
                                   onclick="setAiAnswer('hasGamers', '${opt.key}')"
-                                  class="py-2 rounded-xl text-xs font-bold transition-all border touch-manipulation ${aiAnswers.hasGamers === opt.key ? 'bg-orange-500/10 border-orange-500 text-orange-400' : 'bg-zinc-950/80 border-zinc-800 text-zinc-400 hover:border-zinc-700'}"
+                                  class="py-2 rounded-xl text-xs font-black transition-all border touch-manipulation ${aiAnswers.hasGamers === opt.key ? 'bg-orange-500/10 border-orange-500 text-orange-600' : 'bg-white border-zinc-300 text-zinc-600 hover:border-zinc-400'}"
                                 >
                                   ${opt.lbl}
                                 </button>
@@ -1006,7 +1045,7 @@ Escribe de manera cercana, motivadora y que demuestre el valor agregado de Netli
 
                           <!-- Pregunta 4 -->
                           <div class="space-y-1">
-                            <label class="text-[10px] font-bold tracking-wider text-zinc-500 uppercase">Prioridad Máxima del Hogar</label>
+                            <label class="text-[10px] font-black tracking-wider text-zinc-500 uppercase">Prioridad Máxima del Hogar</label>
                             <div class="grid grid-cols-2 gap-2">
                               ${[
                                 { key: 'seguridad', lbl: 'Blindar / Proteger' },
@@ -1016,7 +1055,7 @@ Escribe de manera cercana, motivadora y que demuestre el valor agregado de Netli
                               ].map(opt => `
                                 <button
                                   onclick="setAiAnswer('primaryFocus', '${opt.key}')"
-                                  class="py-2 rounded-xl text-xs font-bold transition-all border touch-manipulation ${aiAnswers.primaryFocus === opt.key ? 'bg-orange-500/10 border-orange-500 text-orange-400' : 'bg-zinc-950/80 border-zinc-800 text-zinc-400 hover:border-zinc-700'}"
+                                  class="py-2 rounded-xl text-xs font-black transition-all border touch-manipulation ${aiAnswers.primaryFocus === opt.key ? 'bg-orange-500/10 border-orange-500 text-orange-600' : 'bg-white border-zinc-300 text-zinc-600 hover:border-zinc-400'}"
                                 >
                                   ${opt.lbl}
                                 </button>
@@ -1036,56 +1075,90 @@ Escribe de manera cercana, motivadora y que demuestre el valor agregado de Netli
                     `;
                 }
             } else if (selectedService) {
-                // Diseño Original Ajustado Compacto para evitar desconfiguraciones de espacio vertical
+                // Diseño de la consola con cuadrícula dinámica y visualización de iconos
+                const isGrid = selectedService.links.length >= 3;
+                let linksHTML = '';
+                
+                if (isGrid) {
+                    linksHTML = `
+                      <div class="grid grid-cols-2 gap-3 pt-2">
+                        ${selectedService.links.map(link => `
+                          <a 
+                            href="${link.url}"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="bg-white border border-zinc-200 rounded-2xl p-3 flex flex-col items-center justify-center text-center shadow-[0_4px_10px_rgba(0,0,0,0.04)] transition-all duration-300 hover:shadow-[0_10px_20px_rgba(249,115,22,0.15)] hover:border-orange-400 group active:scale-[0.95] touch-manipulation"
+                          >
+                            ${link.img ? `<img src="${link.img}" class="icon-spring w-14 h-14 object-contain mb-2" alt="${link.label}">` : ''}
+                            <span class="text-[11px] font-black text-zinc-900 leading-tight">${link.label}</span>
+                          </a>
+                        `).join('')}
+                      </div>
+                    `;
+                } else {
+                    linksHTML = `
+                      <div class="space-y-3 pt-1">
+                        ${selectedService.links.map(link => `
+                          <a 
+                            href="${link.url}"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="w-full py-4 px-5 rounded-2xl bg-white border border-zinc-200 text-zinc-900 font-black text-sm flex items-center shadow-[0_4px_10px_rgba(0,0,0,0.04)] transition-all duration-300 hover:shadow-[0_10px_20px_rgba(249,115,22,0.15)] hover:border-orange-400 group active:scale-[0.95] touch-manipulation"
+                          >
+                            ${link.img ? `<img src="${link.img}" class="icon-spring w-12 h-12 object-contain mr-4" alt="${link.label}">` : ''}
+                            <span class="flex-1 text-left">${link.label}</span> 
+                            <svg class="w-5 h-5 ml-1 stroke-[3] text-orange-500 transition-transform duration-300 group-hover:translate-x-1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6" /></svg>
+                          </a>
+                        `).join('')}
+                      </div>
+                    `;
+                }
+
                 hudContainer.innerHTML = `
-                  <div class="flex flex-col space-y-3">
-                    <div class="flex items-center space-x-4">
+                  <div class="flex flex-col space-y-3 animate-in fade-in duration-300 h-full">
+                    <div class="flex items-center space-x-4 mb-1 shrink-0">
                       <div class="w-14 h-14 rounded-full bg-zinc-950 border border-zinc-700 flex items-center justify-center ${selectedService.color} shadow-[0_0_20px_currentColor]">
                         ${selectedService.icon}
                       </div>
                       <div>
-                        <span class="text-[10px] font-bold tracking-[0.2em] text-orange-500 uppercase">Módulo Seleccionado</span>
-                        <h3 class="text-2xl font-black text-white tracking-wide">${selectedService.name}</h3>
+                        <span class="text-[10px] font-black tracking-[0.2em] text-orange-600 uppercase">Módulo Seleccionado</span>
+                        <h3 class="text-xl sm:text-2xl font-black text-zinc-900 tracking-wide">${selectedService.name}</h3>
                       </div>
                     </div>
                     
-                    <div class="space-y-3 pt-1">
-                      ${selectedService.links.map(link => `
-                        <a 
-                          href="${link.url}"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          class="w-full py-4 rounded-xl bg-gradient-to-r from-white to-zinc-200 text-black font-extrabold text-sm flex items-center justify-center shadow-lg transition-all hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] active:scale-[0.98] touch-manipulation"
-                        >
-                          ${link.label} 
-                          <svg class="w-5 h-5 ml-1 stroke-[2.5]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6" /></svg>
-                        </a>
-                      `).join('')}
+                    <div class="flex-1 overflow-y-auto custom-scrollbar pr-1 pb-1">
+                        ${linksHTML}
                     </div>
-                    <p class="text-xs sm:text-sm text-zinc-300 font-light leading-relaxed mt-4 md:hidden border-t border-zinc-800/60 pt-4">${selectedService.desc}</p>
+                    
+                    <p class="text-xs sm:text-sm text-zinc-800 font-bold leading-relaxed mt-3 border-t border-zinc-300 pt-3 shrink-0">${selectedService.desc}</p>
                   </div>
                 `;
             } else {
                 hudContainer.innerHTML = `
-                  <div class="flex flex-col justify-center items-center text-center p-4 py-8">
-                    <div class="w-16 h-16 rounded-full border border-dashed border-zinc-700 flex items-center justify-center mb-6 text-zinc-500 animate-[spin_60s_linear_infinite]">
+                  <div class="flex flex-col justify-center items-center text-center p-4 py-8 animate-in fade-in duration-300">
+                    <div class="w-16 h-16 rounded-full border border-dashed border-zinc-400 flex items-center justify-center mb-6 text-zinc-500 animate-[spin_60s_linear_infinite]">
                       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transform -rotate-45"><path d="M12 20h.01" /><path d="M8.5 16.5c3-3 4-3 7 0" /><path d="M5 13a11.5 11.5 0 0 1 14 0" /><path d="M1.5 9.5a19.6 19.6 0 0 1 21 0" /></svg>
                     </div>
-                    <h4 class="text-xl font-bold text-zinc-200 mb-2 tracking-wide">Netlife Feel HUB</h4>
-                    <p class="text-zinc-500 text-sm max-w-sm leading-relaxed font-light mb-6">
+                    <h4 class="text-xl font-black text-zinc-900 mb-2 tracking-wide">Netlife Feel HUB</h4>
+                    <p class="text-zinc-600 text-sm max-w-sm leading-relaxed font-bold mb-6">
                       Haz clic sobre las casillas y descubrirás que NETLIFE es más de lo que conoces.
                     </p>
 
                     <button 
                       onclick="openAiDiagnostic()"
-                      class="w-full py-3.5 bg-zinc-950 border border-orange-500/20 rounded-xl text-orange-400 font-extrabold text-xs uppercase tracking-widest hover:border-orange-500/50 hover:bg-orange-500/5 active:scale-[0.99] transition-all flex items-center justify-center space-x-2 shadow-[0_0_20px_rgba(249,115,22,0.05)] touch-manipulation"
+                      class="w-full py-3.5 bg-white border border-orange-500/20 rounded-xl text-orange-600 font-extrabold text-xs uppercase tracking-widest hover:border-orange-500/50 hover:bg-orange-500/5 active:scale-[0.99] transition-all flex items-center justify-center space-x-2 shadow-[0_0_20px_rgba(249,115,22,0.05)] touch-manipulation"
                     >
-                      <svg class="w-4 h-4 text-orange-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275Z" /><path d="m5 3 1 2.5L8.5 6 6 7 5 9.5 4 7 1.5 6 4 5.5Z" /><path d="m19 17 1 2.5 2.5.5-2.5 1-1 2.5-1-2.5-2.5-1 2.5-1Z" /></svg>
+                      <svg class="w-4 h-4 text-orange-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275Z" /><path d="m5 3 1 2.5L8.5 6 6 7 5 9.5 4 7 1.5 6 4 5.5Z" /><path d="m19 17 1 2.5 2.5.5-2.5 1-1 2.5-1-2.5-2.5-1 2.5-1Z" /></svg>
                       <span>¿En qué te gustaría que Netlife te acompañe?</span>
                     </button>
                   </div>
                 `;
             }
+        }
+
+        function closeConsultModal() {
+            showConsultModal = false;
+            render();
         }
     </script>
 </body>
