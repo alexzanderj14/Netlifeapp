@@ -70,7 +70,7 @@
             background: rgba(249, 115, 22, 0.6);
         }
 
-        /* Animaciones personalizadas del reactor y bobinas */
+        /* Animaciones de latidos de plasma y arco eléctrico del reactor central */
         @keyframes heartbeat-synced {
             0%, 100% {
                 transform: scale(1);
@@ -128,7 +128,7 @@
             50% { 
                 box-shadow: 0 0 28px #eab308, inset 0 0 12px #f97316, 0 0 18px rgba(254, 215, 170, 0.8); 
                 border-color: #ffffff; 
-              }
+            }
         }
 
         .animate-heartbeat-bioluminescent {
@@ -242,7 +242,7 @@
     <!-- Leyenda Instructiva HUD original y limpia -->
     <div class="w-full text-center px-4 pointer-events-none z-20 mt-auto pb-4">
         <p class="text-zinc-100 text-xs sm:text-sm tracking-wide font-semibold max-w-3xl mx-auto leading-relaxed drop-shadow-md">
-            <span class="text-orange-500 font-extrabold">CLIC</span> en el centro del HUB para saber que servicios son parte de tu hogar.
+            <span class="text-orange-500 font-extrabold">CLIC</span> en centro del HUB para saber que servicios son parte de tu hogar.
         </p>
     </div>
 
@@ -471,7 +471,7 @@
             }).join('');
         }
 
-        // Construcción interactiva de los nodos orbitales de servicios
+        // Construcción interactiva de los nodos orbitales de servicios (Optimizados de forma universal para móvil y PC)
         function buildOrbitNodes() {
             const container = document.getElementById('orbit-container');
             container.innerHTML = SERVICES.map((service, index) => {
@@ -497,12 +497,12 @@
                       </div>
                     </button>
 
-                    <!-- Spatial Tooltip: Recuadro blanco transparente optimizado con desenfoque de fondo y borde claro para máxima legibilidad -->
+                    <!-- Spatial Tooltip: Recuadro blanco transparente optimizado con desenfoque de fondo y borde claro para máxima legibilidad tanto en móvil como en PC -->
                     <div 
                       id="tooltip-${service.id}"
-                      class="tooltip hidden md:block absolute w-56 p-4 bg-white/90 backdrop-blur-md border border-zinc-300 rounded-2xl shadow-[0_15px_30px_rgba(0,0,0,0.8)] z-[100] transition-all duration-300 opacity-0 scale-75 pointer-events-none ${tooltipPos}"
+                      class="tooltip absolute w-40 sm:w-52 md:w-56 p-2.5 sm:p-4 bg-white/95 backdrop-blur-md border border-zinc-300 rounded-xl sm:rounded-2xl shadow-[0_15px_30px_rgba(0,0,0,0.8)] z-[100] transition-all duration-300 opacity-0 scale-75 pointer-events-none ${tooltipPos}"
                     >
-                      <p class="text-xs text-zinc-950 leading-relaxed font-bold">${service.desc}</p>
+                      <p class="text-[10px] sm:text-xs text-zinc-950 leading-normal sm:leading-relaxed font-bold">${service.desc}</p>
                     </div>
                   </div>
                 `;
@@ -757,36 +757,13 @@
 
             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
 
-            const systemPrompt = `Actúa como Aura, el sofisticado asesor de inteligencia artificial de Netlife Ecuador, inspirado en el arquetipo de Tony Stark (sofisticado, irreverente pero empático, un Sabio e Inocente).
-Tu tarea es auditar y diseñar un Ecosistema Digital de Vida Inteligente personalizado basándote en la huella de hogar del usuario.
-Debes basar tu propuesta estrictamente en el portafolio real de Netlife:
-- Entretenimiento: Netlife Play, Paramount+, Zapping, El Canal del Fútbol.
-- Productividad: Netlife Cloud, Constructor Web, IP Fija.
-- Seguridad: Netlife Defense, Netlife Assistance, Netlife Cam, Safe Kids, Password Manager.
-- Conectividad de Ultra Velocidad: Extender Dual Band, Wifi Gi, Cableado Ethernet.
-
-Escribe en un español de Ecuador sofisticado, extremadamente emocional y centrado en los beneficios humanos (tiempo, tranquilidad, orgullo y cero peleas en casa por internet lento). 
-No recomiendes simplemente "Megas". Explica cómo estas herramientas específicas blindan sus datos bancarios, protegen a sus hijos, o aseguran sus domingos familiares de películas.
-
-Estructura tu respuesta exactamente así, usando un formato HTML o Markdown ultra-limpio con emojis:
-# 🛡️ DIAGNÓSTICO DE ECOSISTEMA AURA
-[Un párrafo corto e impactante estilo Tony Stark analizando la huella del hogar]
-
-### 💡 TU CONFIGURACIÓN DE VIDA INTELIGENTE
-- **[Nombre de la herramienta de Netlife que aplique]**: [Explicación de 1 línea del beneficio emocional/práctico]
-- **[Segunda herramienta de Netlife]**: [Explicación de 1 línea del beneficio emocional/práctico]
-- **[Tercera herramienta de Netlife]**: [Explicación de 1 línea del beneficio emocional/práctico]
-
-### 💰 RETORNO DE INVERSIÓN (ROI) DE PAZ MENTAL
-[Un cierre asertivo demostrando que contratar todo esto por separado con otros proveedores les costaría el doble de dinero y diez veces más estrés]`;
+            const systemPrompt = `Actúa como Aura, el asesor de IA de Netlife Ecuador, inspirado en el arquetipo de Tony Stark. Escribe en un español de Ecuador sofisticado, emocional y centrado en los beneficios humanos (tiempo, tranquilidad, cero peleas). No recomiendes simplemente "Megas". Explica cómo estas herramientas específicas protegen a la familia. Estructura exactamente así usando formato HTML o Markdown con emojis: # 🛡️ DIAGNÓSTICO DE ECOSISTEMA AURA. ### 💡 TU CONFIGURACIÓN DE VIDA INTELIGENTE. ### 💰 RETORNO DE INVERSIÓN (ROI) DE PAZ MENTAL.`;
 
             const userPrompt = `Genera mi ecosistema de Netlife ideal para esta configuración de hogar ecuatoriano:
 - Tamaño de la familia: ${aiAnswers.householdSize} personas en casa.
 - Nivel de Teletrabajo o Estudio en línea: ${aiAnswers.remoteActivity === 'none' ? 'Ninguno' : aiAnswers.remoteActivity === 'moderate' ? 'Moderado (1 persona)' : 'Intenso (Múltiples personas)'}.
 - Amantes de los Videojuegos en casa (Gamers): ${aiAnswers.hasGamers === 'yes' ? 'Sí, juegan en línea de forma competitiva' : 'No'}.
-- Prioridad del hogar: ${aiAnswers.primaryFocus.toUpperCase()}.
-
-Escribe de manera cercana, motivadora y que demuestre el valor agregado de Netlife frente a la competencia de bajo precio.`;
+- Prioridad del hogar: ${aiAnswers.primaryFocus.toUpperCase()}.`;
 
             const payload = {
               contents: [{ parts: [{ text: userPrompt }] }],
@@ -967,7 +944,6 @@ Escribe de manera cercana, motivadora y que demuestre el valor agregado de Netli
                       </div>
                     `;
                 } else if (aiError) {
-                    // Si ocurre cualquier error, forzamos instantáneamente el render local para que el usuario no vea errores
                     aiResponse = "LOCAL_FALLBACK";
                     aiError = null;
                     renderHUD();
